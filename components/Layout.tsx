@@ -3,9 +3,12 @@ import styled from "@emotion/styled";
 import Head from "next/head";
 import { Header } from ".";
 
-const Wrapper = styled.div`
+interface WrapperProps {
+  sidebarWidth?: string;
+}
+const Wrapper = styled.div<WrapperProps>`
   display: grid;
-  grid-template-columns: 340px minmax(0, 1fr);
+  grid-template-columns: ${({ sidebarWidth = "340px" }) => sidebarWidth} minmax(0, 1fr);
   height: calc(100vh - 48px);
   overflow: hidden;
 
@@ -51,19 +54,21 @@ const Graphs = styled.div<GraphsProps>`
 interface LayoutProps extends GraphsProps {
   title?: string;
   sidebar?: React.ReactNode;
+  sidebarWidth?: string;
 }
 const Layout: React.FC<LayoutProps> = ({
   title = "Математичнi методи в психологiї",
   sidebar = null,
   children,
   layoutRows,
+  sidebarWidth,
 }) => (
   <>
     <Head>
       <title>{title}</title>
     </Head>
     <Header />
-    <Wrapper>
+    <Wrapper sidebarWidth={sidebarWidth}>
       <Sidebar>
         <div>{sidebar}</div>
       </Sidebar>

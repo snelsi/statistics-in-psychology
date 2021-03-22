@@ -1,5 +1,6 @@
 import Card from "./Card";
 import DataTable from "./DataTable";
+import DataTableAlt from "./DataTableAlt";
 import DichotomyTable from "./DichotomyTable";
 import FrequencyCard from "./FrequencyCard";
 import Goodman from "./Goodman";
@@ -15,6 +16,7 @@ import Rangs from "./Rangs";
 export {
   Card,
   DataTable,
+  DataTableAlt,
   DichotomyTable,
   FrequencyCard,
   Goodman,
