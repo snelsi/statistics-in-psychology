@@ -31,7 +31,7 @@ interface GraphsProps {
 const Graphs = styled.div<GraphsProps>`
   background-color: #fafafa;
   display: grid;
-  gap: 1rem;
+  gap: 1.25rem;
   grid-template-rows: ${({ layoutRows = "auto" }) => layoutRows};
   height: auto;
   padding: 1.25rem;
