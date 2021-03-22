@@ -34,7 +34,7 @@ const Graphs = styled.div<GraphsProps>`
   gap: 1rem;
   grid-template-rows: ${({ layoutRows = "auto" }) => layoutRows};
   height: auto;
-  padding: 1rem;
+  padding: 1.25rem;
   overflow: auto;
 `;
 
