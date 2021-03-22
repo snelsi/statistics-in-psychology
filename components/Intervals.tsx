@@ -135,8 +135,8 @@ const Intervals: React.FC<IntervalsProps> = ({
 }) => {
   const rangeRef: any = React.useRef<Range>();
 
-  const xmin = Math.min(...values);
-  const xmax = Math.max(...values);
+  const xmin = Math.min(...data);
+  const xmax = Math.max(...data);
 
   const sum = data.reduce((acc, v) => acc + v, 0);
   const avg = sum / data.length;
@@ -153,7 +153,9 @@ const Intervals: React.FC<IntervalsProps> = ({
     for (let i = 0; i + 1 < points.length; i++) {
       const left = points[i];
       const right = points[i + 1];
-      const dots = data.filter((d) => d >= left && d < right);
+      const dots = data.filter(
+        (d) => d >= left && (i === points.length - 2 ? d <= right : d < right),
+      );
       const xi = (left + right) / 2;
       const xi2 = (xi - avg) ** 2 * dots.length;
       const xi3 = (xi - avg) ** 3 * dots.length;
