@@ -36,11 +36,30 @@ const AsymmetryTag: React.FC<AsymmetryTagProps> = ({ A }) => {
   return <StatHelpText>No asymmetry</StatHelpText>;
 };
 
+const StyledStatGroup = styled(StatGroup)`
+  flex-wrap: wrap;
+  & .chakra-stat {
+    min-width: 120px;
+    @media (max-width: 800px) {
+      min-width: 100%;
+      margin-right: 0;
+    }
+  }
+`;
+const StyledFlex = styled(Flex)`
+  @media (max-width: 800px) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    & h3 {
+      margin-bottom: 1rem;
+    }
+  }
+`;
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: 1.5rem;
 `;
 const Track = styled.div`
   height: 36px;
@@ -200,7 +219,7 @@ const Intervals: React.FC<IntervalsProps> = ({
 
   return (
     <Card>
-      <Flex align="center" justify="space-between" mb="1rem">
+      <StyledFlex align="center" justify="space-between" mb="2.5rem">
         <Heading as="h3" size="lg" fontWeight="600">
           {title}
         </Heading>
@@ -217,7 +236,7 @@ const Intervals: React.FC<IntervalsProps> = ({
             disabled={values.length <= 2}
           />
         </Flex>
-      </Flex>
+      </StyledFlex>
 
       <Wrapper>
         <Range
@@ -258,7 +277,7 @@ const Intervals: React.FC<IntervalsProps> = ({
         />
       </Wrapper>
 
-      <Box overflow="auto">
+      <Box overflow="auto" marginTop="1rem" marginBottom="1rem">
         <Table variant="simple" mb="1rem">
           <Thead>
             <Tr>
@@ -288,7 +307,7 @@ const Intervals: React.FC<IntervalsProps> = ({
         </Table>
       </Box>
 
-      <StatGroup>
+      <StyledStatGroup>
         <Stat>
           <StatLabel>Delta</StatLabel>
           <StatNumber>{delta}</StatNumber>
@@ -319,7 +338,7 @@ const Intervals: React.FC<IntervalsProps> = ({
           <StatNumber title={String(E)}>{roundTo(E, 3)}</StatNumber>
           <StatHelpText>{`${roundTo(m4)} / ${roundTo(sigma4)} - 3`}</StatHelpText>
         </Stat>
-      </StatGroup>
+      </StyledStatGroup>
     </Card>
   );
 };

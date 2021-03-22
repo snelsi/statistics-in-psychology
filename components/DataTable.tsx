@@ -17,6 +17,20 @@ import { FiRefreshCw } from "react-icons/fi";
 import { Card, NumberInput } from "components";
 import { getRandomNumber } from "utils";
 
+const StyledFlex = styled(Flex)`
+  @media (max-width: 800px) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    & h3 {
+      margin-bottom: 1rem;
+    }
+    & button,
+    & input {
+      margin-bottom: 0.5rem;
+    }
+  }
+`;
 const StyledTable = styled(Table)`
   & tr,
   & th,
@@ -131,40 +145,41 @@ const DataTable: React.FC<DataTableProps> = ({ data, setData }) => {
 
   return (
     <Card>
-      <Flex align="center" mb="1.5rem">
-        <Heading as="h3" size="lg" fontWeight="600" mr="auto">
+      <StyledFlex align="center" justify="space-between" mb="1.5rem">
+        <Heading as="h3" size="lg" fontWeight="600" mr="1rem">
           Data
         </Heading>
+        <Flex align="center" flexWrap="wrap">
+          <NumberInput
+            value={rows}
+            setValue={setRows}
+            min={1}
+            step={1}
+            precision={0}
+            variant="filled"
+            mr="4"
+            maxW="120px"
+          />
 
-        <NumberInput
-          value={rows}
-          setValue={setRows}
-          min={1}
-          step={1}
-          precision={0}
-          variant="filled"
-          mr="4"
-          maxW="120px"
-        />
+          <NumberInput
+            value={columns}
+            setValue={setColumns}
+            min={1}
+            step={1}
+            precision={0}
+            variant="filled"
+            mr="4"
+            maxW="120px"
+          />
 
-        <NumberInput
-          value={columns}
-          setValue={setColumns}
-          min={1}
-          step={1}
-          precision={0}
-          variant="filled"
-          mr="4"
-          maxW="120px"
-        />
-
-        <Button onClick={setRandomData} type="button" leftIcon={<span>🎲</span>} mr="4">
-          Random
-        </Button>
-        <Button onClick={resetData} type="button" leftIcon={<FiRefreshCw />}>
-          Reset
-        </Button>
-      </Flex>
+          <Button onClick={setRandomData} type="button" leftIcon={<span>🎲</span>} mr="4">
+            Random
+          </Button>
+          <Button onClick={resetData} type="button" leftIcon={<FiRefreshCw />}>
+            Reset
+          </Button>
+        </Flex>
+      </StyledFlex>
 
       <Box overflow="auto">
         <StyledTable variant="simple" mb="1rem">

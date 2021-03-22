@@ -5,9 +5,15 @@ import { Header } from ".";
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: 340px minmax(0, 1fr);
   height: calc(100vh - 48px);
   overflow: hidden;
+
+  @media (max-width: 800px) {
+    grid-template-columns: 1fr;
+    overflow: auto;
+    height: fit-content;
+  }
 `;
 
 export const Sidebar = styled.div`
@@ -15,7 +21,7 @@ export const Sidebar = styled.div`
   max-width: 100%;
   height: auto;
   padding: 1rem;
-  width: 340px;
+  width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
   z-index: 1;
@@ -36,6 +42,10 @@ const Graphs = styled.div<GraphsProps>`
   height: auto;
   padding: 1.25rem;
   overflow: auto;
+  @media (max-width: 800px) {
+    padding-left: 0;
+    padding-right: 0;
+  }
 `;
 
 interface LayoutProps extends GraphsProps {

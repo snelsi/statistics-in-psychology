@@ -23,6 +23,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Card } from "components";
+import { roundTo } from "utils";
 import { useRange } from "./Rangs";
 
 const GraphWrapper = styled.div`
@@ -97,14 +98,14 @@ const RangCalc: React.FC<RangCalcProps> = ({ data }) => {
         <StatGroup>
           <Stat>
             <StatLabel>Kendall coefficient</StatLabel>
-            <StatNumber>{t}</StatNumber>
+            <StatNumber>{roundTo(t, 7)}</StatNumber>
             <RelationTag t={t} />
             <StatHelpText>{`(2 * ${sum}) / (${n}^2 - ${n})`}</StatHelpText>
           </Stat>
 
           <Stat>
             <StatLabel>Sum</StatLabel>
-            <StatNumber>{sum}</StatNumber>
+            <StatNumber>{roundTo(sum, 7)}</StatNumber>
             <StatHelpText>
               {calcData
                 .slice(0, -1)
@@ -138,8 +139,8 @@ const RangCalc: React.FC<RangCalcProps> = ({ data }) => {
 
       <Card title="Calculations">
         {calcData.slice(0, -1).map(({ calc, r }, i) => (
-          <Box mb="1rem" key={i}>
-            <Flex align="center">
+          <Box mb="1rem" key={i} overflow="auto">
+            <Flex align="center" flexWrap="wrap">
               <Box mr="1rem">{i + 1})</Box>
               <Table variant="simple" width="fit-content" mr="1rem">
                 <Tbody>

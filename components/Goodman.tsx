@@ -1,6 +1,20 @@
 import * as React from "react";
+import styled from "@emotion/styled";
 import { Stat, StatLabel, StatNumber, StatHelpText, StatGroup } from "@chakra-ui/react";
 import { Card } from "components";
+import { roundTo } from "utils";
+
+const StyledStatGroup = styled(StatGroup)`
+  flex-wrap: wrap;
+  & .chakra-stat {
+    min-width: 120px;
+    & .chakra-stat__number {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+`;
 
 interface DependencyTagProps {
   g: number;
@@ -89,12 +103,12 @@ const Goodman: React.FC<GoodmanProps> = ({ data }) => {
 
   return (
     <Card>
-      <StatGroup>
+      <StyledStatGroup>
         <Stat>
           <StatLabel>
             Goodman g<sub>xy</sub>
           </StatLabel>
-          <StatNumber>{gxy}</StatNumber>
+          <StatNumber>{roundTo(gxy, 8)}</StatNumber>
           <StatHelpText>{`(${sumjm} - ${maxnxi}) / (${n} - ${maxnxi})`}</StatHelpText>
           <DependencyTag g={gxy} />
         </Stat>
@@ -103,11 +117,11 @@ const Goodman: React.FC<GoodmanProps> = ({ data }) => {
           <StatLabel>
             Goodman g<sub>yx</sub>
           </StatLabel>
-          <StatNumber>{gyx}</StatNumber>
+          <StatNumber>{roundTo(gyx, 8)}</StatNumber>
           <StatHelpText>{`(${sumik} - ${maxnyj}) / (${n} - ${maxnyj})`}</StatHelpText>
           <DependencyTag g={gyx} />
         </Stat>
-      </StatGroup>
+      </StyledStatGroup>
     </Card>
   );
 };

@@ -1,6 +1,18 @@
 import * as React from "react";
+import styled from "@emotion/styled";
 import { Stat, StatLabel, StatNumber, StatHelpText, StatGroup } from "@chakra-ui/react";
 import { Card } from "components";
+
+const StyledStatGroup = styled(StatGroup)`
+  flex-wrap: wrap;
+  & .chakra-stat {
+    min-width: 120px;
+    @media (max-width: 800px) {
+      min-width: 100%;
+      margin-right: 0;
+    }
+  }
+`;
 
 interface ModeProps {
   data: { x: number }[];
@@ -36,7 +48,7 @@ const Mode: React.FC<ModeProps> = ({ data }) => {
 
   return (
     <Card>
-      <StatGroup>
+      <StyledStatGroup>
         <Stat mr="2rem">
           <StatLabel>Mode</StatLabel>
           <StatNumber>{mode.map((m) => m.x).join(", ")}</StatNumber>
@@ -64,7 +76,7 @@ const Mode: React.FC<ModeProps> = ({ data }) => {
             </StatHelpText>
           )}
         </Stat>
-      </StatGroup>
+      </StyledStatGroup>
     </Card>
   );
 };
