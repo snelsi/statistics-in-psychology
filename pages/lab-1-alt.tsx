@@ -168,11 +168,13 @@ const Lab1 = () => {
           <li key={dot.id}>
             <Input
               value={dot.prop1}
-              onChange={(e) => updateDotProp(e.target.value, i, "prop1")}
+              //  @ts-ignore
+              onChange={(e) => updateDotProp((e.target as HTMLInputElement).value, i, "prop1")}
               placeholder="Property"
             />
             <Input
               value={dot.prop2}
+              //  @ts-ignore
               onChange={(e) => updateDotProp(e.target.value, i, "prop2")}
               placeholder="Value"
             />
