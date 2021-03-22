@@ -1,12 +1,13 @@
 import React from "react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useImmer } from "use-immer";
-import { Heading, Text } from "@chakra-ui/react";
+import { Button, Heading, Text } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 
 const Tex2SVG = dynamic(() => import("react-hook-mathjax"), { ssr: false });
 
-import { Layout, DataTable, Goodman, Mode, FrequencyCard } from "components";
+import { Layout, DataTable, Goodman, FrequencyCard } from "components";
 
 const Sidebar = styled.div`
   & svg {
@@ -32,6 +33,11 @@ const sidebar = (
     <Heading as="h2" size="lg" mb="1rem" fontWeight="600">
       Goodman coefficient
     </Heading>
+    <Link href="/lab-1-alt" passHref>
+      <Button as="a" colorScheme="blue" mb="1rem" isFullWidth>
+        Alt. View
+      </Button>
+    </Link>
     <Text mb="1rem">Shows the dependency between two params in [-1, 1] range.</Text>
     <Text mb="1.5rem">
       1 - direct dependency,
@@ -53,7 +59,6 @@ const Lab1 = () => {
     <Layout title="Лабораторна 1" sidebar={sidebar}>
       <Goodman data={data} />
       <DataTable data={data} setData={setData} />
-      <Mode data={xData} />
       <FrequencyCard data={xData} />
     </Layout>
   );

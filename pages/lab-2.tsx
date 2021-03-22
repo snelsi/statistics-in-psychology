@@ -115,7 +115,7 @@ const Lab2 = () => {
   );
 
   return (
-    <Layout title="Лабораторна 2" sidebar={sidebar}>
+    <Layout title="Лабораторна 2" sidebar={sidebar} layoutColumns="1fr 1fr">
       <Rangs data={data} />
       <RangCalc data={data} />
     </Layout>

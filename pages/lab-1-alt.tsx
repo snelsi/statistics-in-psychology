@@ -1,10 +1,11 @@
 import React from "react";
+import Link from "next/link";
 import { useImmer } from "use-immer";
 import styled from "@emotion/styled";
 import { FiTrash2, FiPlus } from "react-icons/fi";
 import { Button, IconButton, Heading, Input } from "@chakra-ui/react";
 import { uid } from "uid";
-import { Layout, DataTableAlt, Goodman, Mode, FrequencyCard, NumberInput } from "components";
+import { Layout, DataTableAlt, Goodman, FrequencyCard, NumberInput } from "components";
 import { getRandomNumber } from "utils";
 
 const toKey = (prop1: string, prop2: string) => `${prop1.trim()}-//-${prop2.trim()}`.toLowerCase();
@@ -157,6 +158,11 @@ const Lab1 = () => {
       <Heading as="h2" size="lg" mb="1rem" fontWeight="600">
         Goodman coefficient
       </Heading>
+      <Link href="/lab-1" passHref>
+        <Button as="a" colorScheme="blue" mb="1rem" isFullWidth>
+          Main View
+        </Button>
+      </Link>
       <List>
         {data.map((dot, i) => (
           <li key={dot.id}>
@@ -211,7 +217,6 @@ const Lab1 = () => {
     <Layout title="Лабораторна 1" sidebar={sidebar} sidebarWidth="440px">
       <Goodman data={xData.map((row) => row.map((c) => c.x))} />
       <DataTableAlt data={sortedData} />
-      <Mode data={xData.flat()} />
       <FrequencyCard data={xData.flat()} />
     </Layout>
   );

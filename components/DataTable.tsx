@@ -14,7 +14,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import { FiRefreshCw } from "react-icons/fi";
-import { Card, NumberInput } from "components";
+import { Card, NumberInput, Mode } from "components";
 import { getRandomNumber } from "utils";
 
 const StyledFlex = styled(Flex)`
@@ -142,6 +142,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, setData }) => {
   }, [data]);
 
   const n = React.useMemo(() => nxi.reduce((acc, value) => acc + value, 0), [nxi]);
+  const xData = React.useMemo(() => data.map((row) => row.map((x) => ({ x }))).flat(), [data]);
 
   return (
     <Card>
@@ -181,7 +182,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, setData }) => {
         </Flex>
       </StyledFlex>
 
-      <Box overflow="auto">
+      <Box overflow="auto" mb="1rem">
         <StyledTable variant="simple" mb="1rem">
           <Thead>
             <Tr>
@@ -235,6 +236,8 @@ const DataTable: React.FC<DataTableProps> = ({ data, setData }) => {
           </Tfoot>
         </StyledTable>
       </Box>
+
+      <Mode data={xData.flat()} />
     </Card>
   );
 };

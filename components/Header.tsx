@@ -45,7 +45,7 @@ const getCurrentIndex = (pathname: string) => {
   if (pathname === "/lab-4") return 3;
   if (pathname === "/lab-3") return 2;
   if (pathname === "/lab-2") return 1;
-  if (pathname === "/lab-1") return 0;
+  if (pathname === "/lab-1" || pathname === "/lab-1-alt") return 0;
   return undefined;
 };
 
@@ -78,9 +78,9 @@ const Header = () => {
             <Link href="/lab-3" passHref>
               <Tab as="a">Intervals</Tab>
             </Link>
-            {/* <Link href="/lab-4" passHref>
-              <Tab as="a">4</Tab>
-            </Link> */}
+            <Link href="/lab-4" passHref>
+              <Tab as="a">Hypotheses</Tab>
+            </Link>
           </TabList>
         </Tabs>
       </nav>

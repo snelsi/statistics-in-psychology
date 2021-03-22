@@ -36,16 +36,19 @@ export const Sidebar = styled.div`
 
 interface GraphsProps {
   layoutRows?: string;
+  layoutColumns?: string;
 }
 const Graphs = styled.div<GraphsProps>`
   background-color: #fafafa;
   display: grid;
   gap: 1.25rem;
   grid-template-rows: ${({ layoutRows = "auto" }) => layoutRows};
+  grid-template-columns: ${({ layoutColumns = "1fr" }) => layoutColumns};
   height: auto;
   padding: 1.25rem;
   overflow: auto;
   @media (max-width: 800px) {
+    grid-template-columns: 1fr;
     padding-left: 0;
     padding-right: 0;
   }
@@ -61,6 +64,7 @@ const Layout: React.FC<LayoutProps> = ({
   sidebar = null,
   children,
   layoutRows,
+  layoutColumns,
   sidebarWidth,
 }) => (
   <>
@@ -72,7 +76,9 @@ const Layout: React.FC<LayoutProps> = ({
       <Sidebar>
         <div>{sidebar}</div>
       </Sidebar>
-      <Graphs layoutRows={layoutRows}>{children}</Graphs>
+      <Graphs layoutRows={layoutRows} layoutColumns={layoutColumns}>
+        {children}
+      </Graphs>
     </Wrapper>
   </>
 );

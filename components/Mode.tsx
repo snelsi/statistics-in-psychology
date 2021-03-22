@@ -1,10 +1,13 @@
 import * as React from "react";
 import styled from "@emotion/styled";
 import { Stat, StatLabel, StatNumber, StatHelpText, StatGroup } from "@chakra-ui/react";
-import { Card } from "components";
 
 const StyledStatGroup = styled(StatGroup)`
+  align-items: center;
+  background: var(--chakra-colors-gray-50);
+  border-radius: 8px;
   flex-wrap: wrap;
+  padding: 1rem;
   & .chakra-stat {
     min-width: 120px;
     @media (max-width: 800px) {
@@ -47,37 +50,35 @@ const Mode: React.FC<ModeProps> = ({ data }) => {
   const median = data.length % 2 ? data[mid - 1].x : (data[mid].x + data[mid - 1].x) / 2;
 
   return (
-    <Card>
-      <StyledStatGroup>
-        <Stat mr="2rem">
-          <StatLabel>Mode</StatLabel>
-          <StatNumber>{mode.map((m) => m.x).join(", ")}</StatNumber>
-          <StatHelpText>{mode[0].frequency} times</StatHelpText>
-        </Stat>
+    <StyledStatGroup>
+      <Stat mr="2rem">
+        <StatLabel>Mode</StatLabel>
+        <StatNumber>{mode.map((m) => m.x).join(", ")}</StatNumber>
+        <StatHelpText>{mode[0].frequency} times</StatHelpText>
+      </Stat>
 
-        <Stat mr="2rem">
-          <StatLabel>Anti-Mode</StatLabel>
-          {stats[0].frequency === stats[stats.length - 1].frequency ? (
-            <StatNumber>-</StatNumber>
-          ) : (
-            <>
-              <StatNumber>{antimode.map((m) => m.x).join(", ")}</StatNumber>
-              <StatHelpText>{antimode[0].frequency} times</StatHelpText>
-            </>
-          )}
-        </Stat>
+      <Stat mr="2rem">
+        <StatLabel>Anti-Mode</StatLabel>
+        {stats[0].frequency === stats[stats.length - 1].frequency ? (
+          <StatNumber>-</StatNumber>
+        ) : (
+          <>
+            <StatNumber>{antimode.map((m) => m.x).join(", ")}</StatNumber>
+            <StatHelpText>{antimode[0].frequency} times</StatHelpText>
+          </>
+        )}
+      </Stat>
 
-        <Stat>
-          <StatLabel>Median</StatLabel>
-          <StatNumber>{median}</StatNumber>
-          {data.length % 2 === 0 && left !== right && (
-            <StatHelpText as="span">
-              ({data[halfLength - 1].x}/{data[halfLength].x})
-            </StatHelpText>
-          )}
-        </Stat>
-      </StyledStatGroup>
-    </Card>
+      <Stat>
+        <StatLabel>Median</StatLabel>
+        <StatNumber>{median}</StatNumber>
+        {data.length % 2 === 0 && left !== right && (
+          <StatHelpText as="span">
+            ({data[halfLength - 1].x}/{data[halfLength].x})
+          </StatHelpText>
+        )}
+      </Stat>
+    </StyledStatGroup>
   );
 };
 

@@ -4,6 +4,7 @@ import { Range, useThumbOverlap, getTrackBackground } from "react-range";
 import { FiPlus, FiMinus } from "react-icons/fi";
 import {
   Button,
+  ButtonGroup,
   IconButton,
   Box,
   Flex,
@@ -37,7 +38,11 @@ const AsymmetryTag: React.FC<AsymmetryTagProps> = ({ A }) => {
 };
 
 const StyledStatGroup = styled(StatGroup)`
+  align-items: center;
+  background: var(--chakra-colors-gray-50);
+  border-radius: 8px;
   flex-wrap: wrap;
+  padding: 1rem;
   & .chakra-stat {
     min-width: 120px;
     @media (max-width: 800px) {
@@ -73,7 +78,7 @@ const Track = styled.div`
   }
 `;
 const Thumb = styled.div`
-  --thumb-size: 42px;
+  --thumb-size: 36px;
   height: var(--thumb-size);
   width: var(--thumb-size);
   border-radius: 4px;
@@ -224,18 +229,18 @@ const Intervals: React.FC<IntervalsProps> = ({
           {title}
         </Heading>
 
-        <Flex align="center">
-          <Button onClick={calculateIntervals} mr="1rem">
+        <ButtonGroup spacing="1rem">
+          <Button onClick={calculateIntervals} colorScheme="blue">
             Calculate Intervals
           </Button>
-          <IconButton aria-label="Add interval" onClick={addInterval} icon={<FiPlus />} mr="1rem" />
+          <IconButton aria-label="Add interval" onClick={addInterval} icon={<FiPlus />} />
           <IconButton
             aria-label="Remove interval"
             onClick={removeInterval}
             icon={<FiMinus />}
             disabled={values.length <= 2}
           />
-        </Flex>
+        </ButtonGroup>
       </StyledFlex>
 
       <Wrapper>
@@ -328,8 +333,7 @@ const Intervals: React.FC<IntervalsProps> = ({
 
         <Stat>
           <StatLabel>A</StatLabel>
-          <StatNumber title={String(A)}>{roundTo(A, 3)}</StatNumber>
-          <StatHelpText>{`${roundTo(m3)} / ${roundTo(sigma3)}`}</StatHelpText>
+          <StatNumber title={`${roundTo(m3)} / ${roundTo(sigma3)}`}>{roundTo(A, 3)}</StatNumber>
           <AsymmetryTag A={A} />
         </Stat>
 

@@ -1,13 +1,23 @@
 import * as React from "react";
 import { AppProps } from "next/app";
 import Head from "next/head";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+
+const theme = extendTheme({
+  colors: {
+    blue: {
+      500: "#0070f3",
+      600: "#0765d2",
+      700: "#055cc1",
+    },
+  },
+});
 
 import "css/styles.css";
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <Component {...pageProps} />
       <Head>
         <link rel="icon" href="favicon.svg" />

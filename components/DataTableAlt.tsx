@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "@emotion/styled";
 import { Box, Table, Thead, Tbody, Tr, Th, Td, Tfoot } from "@chakra-ui/react";
-import { Card } from "components";
+import { Card, Mode } from "components";
 
 const StyledTable = styled(Table)`
   & tr,
@@ -50,10 +50,11 @@ const DataTableAlt: React.FC<DataTableProps> = ({ data }) => {
   }, [data]);
 
   const n = React.useMemo(() => data.reduce((acc, d) => acc + d.nyj, 0), [data]);
+  const xData = data.map((row) => row.data.map((d) => ({ x: d.value })));
 
   return (
     <Card title="Data">
-      <Box overflow="auto">
+      <Box overflow="auto" mb="1rem">
         <StyledTable variant="simple" mb="1rem">
           <Thead>
             <Tr>
@@ -103,6 +104,8 @@ const DataTableAlt: React.FC<DataTableProps> = ({ data }) => {
           </Tfoot>
         </StyledTable>
       </Box>
+
+      <Mode data={xData.flat()} />
     </Card>
   );
 };
