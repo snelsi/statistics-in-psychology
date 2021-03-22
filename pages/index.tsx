@@ -1,10 +1,13 @@
-import styled from 'styled-components'
+import * as React from "react";
+import { useRouter } from "next/router";
+import { Layout } from "components";
 
-const Title = styled.h1`
-  color: red;
-  font-size: 50px;
-`
+export default function Page() {
+  const router = useRouter();
 
-export default function Home() {
-  return <Title>My page</Title>
+  React.useEffect(() => {
+    router.push("/lab-1");
+  }, []);
+
+  return <Layout title="Лабораторна 1" />;
 }
