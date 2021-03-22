@@ -275,7 +275,7 @@ const Intervals: React.FC<IntervalsProps> = ({
           <Tbody>
             {ranges.map((range, i) => (
               <Tr key={i}>
-                <Td>{`[${range.left}, ${range.right})`}</Td>
+                <Td>{`[${range.left}, ${range.right}${i === ranges.length - 1 ? "]" : ")"}`}</Td>
                 <Td>{range.dots.length}</Td>
                 <Td>{`${range.dots.length} / ${n}`}</Td>
                 <Td>{`${range.total} / ${n}`}</Td>
