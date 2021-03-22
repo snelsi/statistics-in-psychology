@@ -9,14 +9,17 @@ const DependencyTag: React.FC<DependencyTagProps> = ({ g }) => {
   if (g >= 1) {
     return <StatHelpText color="teal.400">Direct dependency</StatHelpText>;
   }
-  if (g >= 0.75) {
+  if (g >= 0.7) {
     return <StatHelpText color="green.400">High dependency</StatHelpText>;
   }
   if (g >= 0.5) {
     return <StatHelpText color="yellow.400">Medium dependency</StatHelpText>;
   }
-  if (g >= 0.25) {
+  if (g >= 0.3) {
     return <StatHelpText color="orange.400">Low dependency</StatHelpText>;
+  }
+  if (g >= 0.2) {
+    return <StatHelpText color="orange.400">Very Low dependency</StatHelpText>;
   }
   if (g < 0) {
     return <StatHelpText color="red.500">Anti-dependency</StatHelpText>;
