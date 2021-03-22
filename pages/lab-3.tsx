@@ -65,7 +65,7 @@ const DataInput: React.FC<DataInputProps> = ({ data, setData, title }) => {
   return (
     <>
       {title && (
-        <Heading as="h3" size="md" mb="1rem" fontWeight="600">
+        <Heading as="h2" size="md" mb="1rem" fontWeight="600">
           {title}
         </Heading>
       )}
@@ -118,10 +118,6 @@ const Lab3 = () => {
 
   const sidebar = (
     <>
-      <Heading as="h2" size="lg" mb="1rem" fontWeight="600">
-        Data
-      </Heading>
-
       <DataInput data={data1} setData={setData1} title="Array 1" />
       <DataInput data={data2} setData={setData2} title="Array 2" />
     </>
