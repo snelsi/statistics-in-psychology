@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "@emotion/styled";
-import { Box, Table, Thead, Tbody, Tr, Th, Td, Tfoot } from "@chakra-ui/react";
+import { Box, Table, Thead, Tbody, Tr, Th, Td, Tfoot, Fade } from "@chakra-ui/react";
 import { Card, Mode } from "components";
 
 const StyledTable = styled(Table)`
@@ -53,60 +53,62 @@ const DataTableAlt: React.FC<DataTableProps> = ({ data }) => {
   const xData = data.map((row) => row.data.map((d) => ({ x: d.value })));
 
   return (
-    <Card title="Data">
-      <Box overflow="auto" mb="1rem">
-        <StyledTable variant="simple" mb="1rem">
-          <Thead>
-            <Tr>
-              <Th />
-              {data[0].data.map(({ prop2 }) => (
-                <Th key={prop2} isNumeric>
-                  {prop2}
+    <Fade in>
+      <Card title="Data">
+        <Box overflow="auto" mb="1rem">
+          <StyledTable variant="simple" mb="1rem">
+            <Thead>
+              <Tr>
+                <Th />
+                {data[0].data.map(({ prop2 }) => (
+                  <Th key={prop2} isNumeric>
+                    {prop2}
+                  </Th>
+                ))}
+                <Th isNumeric>
+                  n<sub>yj</sub>
                 </Th>
+              </Tr>
+            </Thead>
+
+            <Tbody>
+              {data.map((row) => (
+                <Tr key={row.prop1}>
+                  <Th>{row.prop1}</Th>
+
+                  {row.data.map((dot) => (
+                    <Td key={dot.prop2} isNumeric>
+                      {dot.value}
+                    </Td>
+                  ))}
+
+                  <Td isNumeric>{row.nyj}</Td>
+                </Tr>
               ))}
-              <Th isNumeric>
-                n<sub>yj</sub>
-              </Th>
-            </Tr>
-          </Thead>
+            </Tbody>
 
-          <Tbody>
-            {data.map((row) => (
-              <Tr key={row.prop1}>
-                <Th>{row.prop1}</Th>
+            <Tfoot>
+              <Tr>
+                <Th isNumeric>
+                  n<sub>xi</sub>
+                </Th>
 
-                {row.data.map((dot) => (
-                  <Td key={dot.prop2} isNumeric>
-                    {dot.value}
+                {nxi.map((nx, i) => (
+                  <Td isNumeric key={i}>
+                    {nx}
                   </Td>
                 ))}
-
-                <Td isNumeric>{row.nyj}</Td>
-              </Tr>
-            ))}
-          </Tbody>
-
-          <Tfoot>
-            <Tr>
-              <Th isNumeric>
-                n<sub>xi</sub>
-              </Th>
-
-              {nxi.map((nx, i) => (
-                <Td isNumeric key={i}>
-                  {nx}
+                <Td isNumeric fontWeight={600}>
+                  {n}
                 </Td>
-              ))}
-              <Td isNumeric fontWeight={600}>
-                {n}
-              </Td>
-            </Tr>
-          </Tfoot>
-        </StyledTable>
-      </Box>
+              </Tr>
+            </Tfoot>
+          </StyledTable>
+        </Box>
 
-      <Mode data={xData.flat()} />
-    </Card>
+        <Mode data={xData.flat()} />
+      </Card>
+    </Fade>
   );
 };
 

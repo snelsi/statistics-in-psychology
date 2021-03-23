@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { useImmer } from "use-immer";
 import { FiTrash2, FiPlus } from "react-icons/fi";
-import { Button, IconButton, Heading } from "@chakra-ui/react";
+import { Button, IconButton, Heading, Fade } from "@chakra-ui/react";
 import { getRandomNumber } from "utils";
 import { Layout, Intervals, NumberInput } from "components";
 
@@ -117,10 +117,10 @@ const Lab3 = () => {
   const [ranges2, setRanges2] = useImmer<number[]>(data2);
 
   const sidebar = (
-    <>
+    <Fade in>
       <DataInput data={data1} setData={setData1} title="Array 1" />
       <DataInput data={data2} setData={setData2} title="Array 2" />
-    </>
+    </Fade>
   );
 
   return (

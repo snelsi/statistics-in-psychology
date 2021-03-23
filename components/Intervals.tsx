@@ -20,6 +20,7 @@ import {
   StatNumber,
   StatHelpText,
   StatGroup,
+  Fade,
 } from "@chakra-ui/react";
 import { Card } from "components";
 import { roundTo } from "utils";
@@ -223,127 +224,129 @@ const Intervals: React.FC<IntervalsProps> = ({
   const removeInterval = () => setValues(values.slice(0, -1));
 
   return (
-    <Card>
-      <StyledFlex align="center" justify="space-between" mb="2.5rem">
-        <Heading as="h3" size="lg" fontWeight="600">
-          {title}
-        </Heading>
+    <Fade in>
+      <Card>
+        <StyledFlex align="center" justify="space-between" mb="2.5rem">
+          <Heading as="h3" size="lg" fontWeight="600">
+            {title}
+          </Heading>
 
-        <ButtonGroup spacing="1rem">
-          <Button onClick={calculateIntervals} colorScheme="blue">
-            Calculate Intervals
-          </Button>
-          <IconButton aria-label="Add interval" onClick={addInterval} icon={<FiPlus />} />
-          <IconButton
-            aria-label="Remove interval"
-            onClick={removeInterval}
-            icon={<FiMinus />}
-            disabled={values.length <= 2}
-          />
-        </ButtonGroup>
-      </StyledFlex>
+          <ButtonGroup spacing="1rem">
+            <Button onClick={calculateIntervals} colorScheme="blue">
+              Calculate Intervals
+            </Button>
+            <IconButton aria-label="Add interval" onClick={addInterval} icon={<FiPlus />} />
+            <IconButton
+              aria-label="Remove interval"
+              onClick={removeInterval}
+              icon={<FiMinus />}
+              disabled={values.length <= 2}
+            />
+          </ButtonGroup>
+        </StyledFlex>
 
-      <Wrapper>
-        <Range
-          allowOverlap
-          values={values}
-          ref={rangeRef}
-          step={step}
-          min={min}
-          max={max}
-          onChange={(values) => setValues(values)}
-          renderTrack={({ props, children }) => (
-            <Track
-              onMouseDown={props.onMouseDown}
-              onTouchStart={props.onTouchStart}
-              style={props.style}
-            >
-              <div
-                ref={props.ref}
-                style={{
-                  background: getTrackBackground({
-                    values,
-                    colors: getColors(values.length),
-                    min,
-                    max,
-                  }),
-                }}
+        <Wrapper>
+          <Range
+            allowOverlap
+            values={values}
+            ref={rangeRef}
+            step={step}
+            min={min}
+            max={max}
+            onChange={(values) => setValues(values)}
+            renderTrack={({ props, children }) => (
+              <Track
+                onMouseDown={props.onMouseDown}
+                onTouchStart={props.onTouchStart}
+                style={props.style}
               >
-                {children}
-              </div>
-            </Track>
-          )}
-          renderThumb={({ props, index, isDragged }) => (
-            <Thumb {...props} style={props.style}>
-              <ThumbLabel rangeRef={rangeRef.current} values={values} index={index} />
-              <div className="thumb-block" data-is-dragged={isDragged} />
-            </Thumb>
-          )}
-        />
-      </Wrapper>
+                <div
+                  ref={props.ref}
+                  style={{
+                    background: getTrackBackground({
+                      values,
+                      colors: getColors(values.length),
+                      min,
+                      max,
+                    }),
+                  }}
+                >
+                  {children}
+                </div>
+              </Track>
+            )}
+            renderThumb={({ props, index, isDragged }) => (
+              <Thumb {...props} style={props.style}>
+                <ThumbLabel rangeRef={rangeRef.current} values={values} index={index} />
+                <div className="thumb-block" data-is-dragged={isDragged} />
+              </Thumb>
+            )}
+          />
+        </Wrapper>
 
-      <Box overflow="auto" marginTop="1rem" marginBottom="1rem">
-        <Table variant="simple" mb="1rem">
-          <Thead>
-            <Tr>
-              <Th>Interval</Th>
-              <Th>Frequency</Th>
-              <Th>Relative Frequency</Th>
-              <Th>Total Frequency</Th>
-              <Th>xi2</Th>
-              <Th>xi3</Th>
-              <Th>xi4</Th>
-            </Tr>
-          </Thead>
-
-          <Tbody>
-            {ranges.map((range, i) => (
-              <Tr key={i}>
-                <Td>{`[${range.left}, ${range.right}${i === ranges.length - 1 ? "]" : ")"}`}</Td>
-                <Td>{range.dots.length}</Td>
-                <Td>{`${range.dots.length} / ${n}`}</Td>
-                <Td>{`${range.total} / ${n}`}</Td>
-                <Td>{roundTo(range.xi2, 3)}</Td>
-                <Td>{roundTo(range.xi3, 3)}</Td>
-                <Td>{roundTo(range.xi4, 3)}</Td>
+        <Box overflow="auto" marginTop="1rem" marginBottom="1rem">
+          <Table variant="simple" mb="1rem">
+            <Thead>
+              <Tr>
+                <Th>Interval</Th>
+                <Th>Frequency</Th>
+                <Th>Relative Frequency</Th>
+                <Th>Total Frequency</Th>
+                <Th>xi2</Th>
+                <Th>xi3</Th>
+                <Th>xi4</Th>
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </Box>
+            </Thead>
 
-      <StyledStatGroup>
-        <Stat>
-          <StatLabel>Delta</StatLabel>
-          <StatNumber>{delta}</StatNumber>
-          <StatHelpText>{`${k} * ${h} - (${xmax} - ${xmin})`}</StatHelpText>
-        </Stat>
+            <Tbody>
+              {ranges.map((range, i) => (
+                <Tr key={i}>
+                  <Td>{`[${range.left}, ${range.right}${i === ranges.length - 1 ? "]" : ")"}`}</Td>
+                  <Td>{range.dots.length}</Td>
+                  <Td>{`${range.dots.length} / ${n}`}</Td>
+                  <Td>{`${range.total} / ${n}`}</Td>
+                  <Td>{roundTo(range.xi2, 3)}</Td>
+                  <Td>{roundTo(range.xi3, 3)}</Td>
+                  <Td>{roundTo(range.xi4, 3)}</Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </Box>
 
-        <Stat>
-          <StatLabel>h</StatLabel>
-          <StatNumber>{h}</StatNumber>
-          <StatHelpText>{`(${xmax} - ${xmin}) / ${k}`}</StatHelpText>
-        </Stat>
+        <StyledStatGroup>
+          <Stat>
+            <StatLabel>Delta</StatLabel>
+            <StatNumber>{delta}</StatNumber>
+            <StatHelpText>{`${k} * ${h} - (${xmax} - ${xmin})`}</StatHelpText>
+          </Stat>
 
-        <Stat>
-          <StatLabel>k</StatLabel>
-          <StatNumber>{k}</StatNumber>
-          <StatHelpText>{`1 + log2(${n})`}</StatHelpText>
-        </Stat>
+          <Stat>
+            <StatLabel>h</StatLabel>
+            <StatNumber>{h}</StatNumber>
+            <StatHelpText>{`(${xmax} - ${xmin}) / ${k}`}</StatHelpText>
+          </Stat>
 
-        <Stat>
-          <StatLabel>A</StatLabel>
-          <StatNumber title={`${roundTo(m3)} / ${roundTo(sigma3)}`}>{roundTo(A, 3)}</StatNumber>
-          <AsymmetryTag A={A} />
-        </Stat>
+          <Stat>
+            <StatLabel>k</StatLabel>
+            <StatNumber>{k}</StatNumber>
+            <StatHelpText>{`1 + log2(${n})`}</StatHelpText>
+          </Stat>
 
-        <Stat>
-          <StatLabel>E</StatLabel>
-          <StatNumber title={String(E)}>{roundTo(E, 3)}</StatNumber>
-          <StatHelpText>{`${roundTo(m4)} / ${roundTo(sigma4)} - 3`}</StatHelpText>
-        </Stat>
-      </StyledStatGroup>
-    </Card>
+          <Stat>
+            <StatLabel>A</StatLabel>
+            <StatNumber title={`${roundTo(m3)} / ${roundTo(sigma3)}`}>{roundTo(A, 3)}</StatNumber>
+            <AsymmetryTag A={A} />
+          </Stat>
+
+          <Stat>
+            <StatLabel>E</StatLabel>
+            <StatNumber title={String(E)}>{roundTo(E, 3)}</StatNumber>
+            <StatHelpText>{`${roundTo(m4)} / ${roundTo(sigma4)} - 3`}</StatHelpText>
+          </Stat>
+        </StyledStatGroup>
+      </Card>
+    </Fade>
   );
 };
 

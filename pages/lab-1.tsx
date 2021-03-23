@@ -2,7 +2,7 @@ import React from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useImmer } from "use-immer";
-import { Button, Heading, Text } from "@chakra-ui/react";
+import { Button, Heading, Text, Fade } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 
 const Tex2SVG = dynamic(() => import("react-hook-mathjax"), { ssr: false });
@@ -29,25 +29,27 @@ const initialData = [
 ];
 
 const sidebar = (
-  <Sidebar>
-    <Heading as="h2" size="lg" mb="1rem" fontWeight="600">
-      Goodman coefficient
-    </Heading>
-    <Link href="/lab-1-alt" passHref>
-      <Button as="a" colorScheme="blue" mb="1rem" isFullWidth>
-        Alt. View
-      </Button>
-    </Link>
-    <Text mb="1rem">Shows the dependency between two params in [-1, 1] range.</Text>
-    <Text mb="1.5rem">
-      1 - direct dependency,
-      <br />0 - no direct dependency,
-      <br />
-      -1 - anti-dependency.
-    </Text>
-    <Tex2SVG latex={gxyFormula} />
-    <Tex2SVG latex={gyxFormula} />
-  </Sidebar>
+  <Fade in>
+    <Sidebar>
+      <Heading as="h2" size="lg" mb="1rem" fontWeight="600">
+        Goodman coefficient
+      </Heading>
+      <Link href="/lab-1-alt" passHref>
+        <Button as="a" colorScheme="blue" mb="1rem" isFullWidth>
+          Alt. View
+        </Button>
+      </Link>
+      <Text mb="1rem">Shows the dependency between two params in [-1, 1] range.</Text>
+      <Text mb="1.5rem">
+        1 - direct dependency,
+        <br />0 - no direct dependency,
+        <br />
+        -1 - anti-dependency.
+      </Text>
+      <Tex2SVG latex={gxyFormula} />
+      <Tex2SVG latex={gyxFormula} />
+    </Sidebar>
+  </Fade>
 );
 
 const Lab1 = () => {

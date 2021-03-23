@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "@emotion/styled";
-import { Stat, StatLabel, StatNumber, StatHelpText, StatGroup } from "@chakra-ui/react";
+import { Stat, StatLabel, StatNumber, StatHelpText, StatGroup, Fade } from "@chakra-ui/react";
 import { Card } from "components";
 import { roundTo } from "utils";
 
@@ -102,27 +102,29 @@ const Goodman: React.FC<GoodmanProps> = ({ data }) => {
   const { gyx, sumik, maxnyj } = React.useMemo(() => getGyx(data), [data]);
 
   return (
-    <Card>
-      <StyledStatGroup>
-        <Stat>
-          <StatLabel>
-            Goodman g<sub>xy</sub>
-          </StatLabel>
-          <StatNumber>{roundTo(gxy, 8)}</StatNumber>
-          <StatHelpText>{`(${sumjm} - ${maxnxi}) / (${n} - ${maxnxi})`}</StatHelpText>
-          <DependencyTag g={gxy} />
-        </Stat>
+    <Fade in>
+      <Card>
+        <StyledStatGroup>
+          <Stat>
+            <StatLabel>
+              Goodman g<sub>xy</sub>
+            </StatLabel>
+            <StatNumber>{roundTo(gxy, 8)}</StatNumber>
+            <StatHelpText>{`(${sumjm} - ${maxnxi}) / (${n} - ${maxnxi})`}</StatHelpText>
+            <DependencyTag g={gxy} />
+          </Stat>
 
-        <Stat>
-          <StatLabel>
-            Goodman g<sub>yx</sub>
-          </StatLabel>
-          <StatNumber>{roundTo(gyx, 8)}</StatNumber>
-          <StatHelpText>{`(${sumik} - ${maxnyj}) / (${n} - ${maxnyj})`}</StatHelpText>
-          <DependencyTag g={gyx} />
-        </Stat>
-      </StyledStatGroup>
-    </Card>
+          <Stat>
+            <StatLabel>
+              Goodman g<sub>yx</sub>
+            </StatLabel>
+            <StatNumber>{roundTo(gyx, 8)}</StatNumber>
+            <StatHelpText>{`(${sumik} - ${maxnyj}) / (${n} - ${maxnyj})`}</StatHelpText>
+            <DependencyTag g={gyx} />
+          </Stat>
+        </StyledStatGroup>
+      </Card>
+    </Fade>
   );
 };
 

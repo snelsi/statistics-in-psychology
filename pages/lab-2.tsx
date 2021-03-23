@@ -4,7 +4,7 @@ import { useImmer } from "use-immer";
 import { uid } from "uid";
 
 import { FiTrash2, FiPlus } from "react-icons/fi";
-import { Button, IconButton, Heading } from "@chakra-ui/react";
+import { Button, IconButton, Heading, Fade } from "@chakra-ui/react";
 import { getRandomNumber } from "utils";
 import { Layout, NumberInput, Rangs, RangCalc } from "components";
 
@@ -75,7 +75,7 @@ const Lab2 = () => {
   };
 
   const sidebar = (
-    <>
+    <Fade in>
       <Heading as="h2" size="lg" mb="1rem" fontWeight="600">
         Data
       </Heading>
@@ -111,7 +111,7 @@ const Lab2 = () => {
       >
         Random
       </Button>
-    </>
+    </Fade>
   );
 
   return (

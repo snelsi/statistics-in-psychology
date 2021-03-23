@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useImmer } from "use-immer";
 import styled from "@emotion/styled";
 import { FiTrash2, FiPlus } from "react-icons/fi";
-import { Button, IconButton, Heading, Input } from "@chakra-ui/react";
+import { Button, IconButton, Heading, Input, Fade } from "@chakra-ui/react";
 import { uid } from "uid";
 import { Layout, DataTableAlt, Goodman, FrequencyCard, NumberInput } from "components";
 import { getRandomNumber } from "utils";
@@ -154,7 +154,7 @@ const Lab1 = () => {
   };
 
   const sidebar = (
-    <>
+    <Fade in>
       <Heading as="h2" size="lg" mb="1rem" fontWeight="600">
         Goodman coefficient
       </Heading>
@@ -210,7 +210,7 @@ const Lab1 = () => {
       >
         Random
       </Button>
-    </>
+    </Fade>
   );
 
   const xData = sortedData.map((row) => row.data.map((d) => ({ x: d.value })));

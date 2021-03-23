@@ -12,6 +12,7 @@ import {
   Td,
   Tfoot,
   Heading,
+  Fade,
 } from "@chakra-ui/react";
 import { FiRefreshCw } from "react-icons/fi";
 import { Card, NumberInput, Mode } from "components";
@@ -145,100 +146,102 @@ const DataTable: React.FC<DataTableProps> = ({ data, setData }) => {
   const xData = React.useMemo(() => data.map((row) => row.map((x) => ({ x }))).flat(), [data]);
 
   return (
-    <Card>
-      <StyledFlex align="center" justify="space-between" mb="1.5rem">
-        <Heading as="h3" size="lg" fontWeight="600" mr="1rem">
-          Data
-        </Heading>
-        <Flex align="center" flexWrap="wrap">
-          <NumberInput
-            value={rows}
-            setValue={setRows}
-            min={1}
-            step={1}
-            precision={0}
-            variant="filled"
-            mr="4"
-            maxW="120px"
-          />
+    <Fade in>
+      <Card>
+        <StyledFlex align="center" justify="space-between" mb="1.5rem">
+          <Heading as="h3" size="lg" fontWeight="600" mr="1rem">
+            Data
+          </Heading>
+          <Flex align="center" flexWrap="wrap">
+            <NumberInput
+              value={rows}
+              setValue={setRows}
+              min={1}
+              step={1}
+              precision={0}
+              variant="filled"
+              mr="4"
+              maxW="120px"
+            />
 
-          <NumberInput
-            value={columns}
-            setValue={setColumns}
-            min={1}
-            step={1}
-            precision={0}
-            variant="filled"
-            mr="4"
-            maxW="120px"
-          />
+            <NumberInput
+              value={columns}
+              setValue={setColumns}
+              min={1}
+              step={1}
+              precision={0}
+              variant="filled"
+              mr="4"
+              maxW="120px"
+            />
 
-          <Button onClick={setRandomData} type="button" leftIcon={<span>🎲</span>} mr="4">
-            Random
-          </Button>
-          <Button onClick={resetData} type="button" leftIcon={<FiRefreshCw />}>
-            Reset
-          </Button>
-        </Flex>
-      </StyledFlex>
+            <Button onClick={setRandomData} type="button" leftIcon={<span>🎲</span>} mr="4">
+              Random
+            </Button>
+            <Button onClick={resetData} type="button" leftIcon={<FiRefreshCw />}>
+              Reset
+            </Button>
+          </Flex>
+        </StyledFlex>
 
-      <Box overflow="auto" mb="1rem">
-        <StyledTable variant="simple" mb="1rem">
-          <Thead>
-            <Tr>
-              <Th />
-              {data[0].map((_, i) => (
-                <Th key={i} isNumeric>
-                  {i + 1}
+        <Box overflow="auto" mb="1rem">
+          <StyledTable variant="simple" mb="1rem">
+            <Thead>
+              <Tr>
+                <Th />
+                {data[0].map((_, i) => (
+                  <Th key={i} isNumeric>
+                    {i + 1}
+                  </Th>
+                ))}
+                <Th isNumeric>
+                  n<sub>yj</sub>
                 </Th>
+              </Tr>
+            </Thead>
+
+            <Tbody>
+              {data.map((row, i) => (
+                <Tr key={i}>
+                  <Th isNumeric>{i + 1}</Th>
+
+                  {row.map((dot, j) => (
+                    <Td key={`${i}-${j}`} className="cell-input">
+                      <NumberInput
+                        value={dot}
+                        setValue={(newX) => updateDot(newX, i, j)}
+                        key={`${i}-${j}`}
+                      />
+                    </Td>
+                  ))}
+
+                  <Td isNumeric>{row.reduce((acc, value) => acc + value, 0)}</Td>
+                </Tr>
               ))}
-              <Th isNumeric>
-                n<sub>yj</sub>
-              </Th>
-            </Tr>
-          </Thead>
+            </Tbody>
 
-          <Tbody>
-            {data.map((row, i) => (
-              <Tr key={i}>
-                <Th isNumeric>{i + 1}</Th>
+            <Tfoot>
+              <Tr>
+                <Th isNumeric>
+                  n<sub>xi</sub>
+                </Th>
 
-                {row.map((dot, j) => (
-                  <Td key={`${i}-${j}`} className="cell-input">
-                    <NumberInput
-                      value={dot}
-                      setValue={(newX) => updateDot(newX, i, j)}
-                      key={`${i}-${j}`}
-                    />
+                {nxi.map((nx, i) => (
+                  <Td isNumeric key={i}>
+                    {nx}
                   </Td>
                 ))}
-
-                <Td isNumeric>{row.reduce((acc, value) => acc + value, 0)}</Td>
-              </Tr>
-            ))}
-          </Tbody>
-
-          <Tfoot>
-            <Tr>
-              <Th isNumeric>
-                n<sub>xi</sub>
-              </Th>
-
-              {nxi.map((nx, i) => (
-                <Td isNumeric key={i}>
-                  {nx}
+                <Td isNumeric fontWeight={600}>
+                  {n}
                 </Td>
-              ))}
-              <Td isNumeric fontWeight={600}>
-                {n}
-              </Td>
-            </Tr>
-          </Tfoot>
-        </StyledTable>
-      </Box>
+              </Tr>
+            </Tfoot>
+          </StyledTable>
+        </Box>
 
-      <Mode data={xData.flat()} />
-    </Card>
+        <Mode data={xData.flat()} />
+      </Card>
+    </Fade>
   );
 };
 

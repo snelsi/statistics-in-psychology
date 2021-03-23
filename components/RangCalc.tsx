@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "@emotion/styled";
-import { Box, Flex, Table, Tbody, Tr, Td } from "@chakra-ui/react";
+import { Box, Flex, Table, Tbody, Tr, Td, Fade } from "@chakra-ui/react";
 import {
   ScatterChart,
   Scatter,
@@ -54,55 +54,63 @@ const RangCalc: React.FC<RangCalcProps> = ({ data }) => {
 
   return (
     <>
-      <Card title="Calculations">
-        <GraphWrapper>
-          {calcData.slice(0, -1).map(({ calc, r }, i) => (
-            <Flex align="center" mb="1rem" key={i} width="fit-content">
-              <Box mr="1rem">{i + 1})</Box>
-              <Table variant="simple" width="fit-content" mr="1rem">
-                <Tbody>
-                  <Tr>
-                    {calc.map(({ cy }, i) => (
-                      <Td key={i} isNumeric>
-                        {cy}
-                      </Td>
-                    ))}
-                  </Tr>
-                  <Tr>
-                    {calc.map(({ cx }, i) => (
-                      <Td key={i} isNumeric>
-                        {cx}
-                      </Td>
-                    ))}
-                  </Tr>
-                </Tbody>
-              </Table>
-              <Box ml="auto">{r}</Box>
-            </Flex>
-          ))}
-        </GraphWrapper>
-      </Card>
-
-      <Card title="Data Plot">
-        <GraphWrapper>
-          <ResponsiveContainer width="100%" height="100%">
-            <ScatterChart
-              width={400}
-              height={400}
-              margin={{
-                top: 20,
-                right: 20,
-              }}
-            >
-              <CartesianGrid />
-              <XAxis type="number" dataKey="x" name="x" />
-              <YAxis type="number" dataKey="y" name="y" />
-              <Tooltip cursor={{ strokeDasharray: "3 3" }} />
-              <Scatter data={dots} fill="#0070f3" line={{ stroke: "#0070f3" }} lineType="fitting" />
-            </ScatterChart>
-          </ResponsiveContainer>
-        </GraphWrapper>
-      </Card>
+      <Fade in>
+        <Card title="Calculations">
+          <GraphWrapper>
+            {calcData.slice(0, -1).map(({ calc, r }, i) => (
+              <Flex align="center" mb="1rem" key={i} width="fit-content">
+                <Box mr="1rem">{i + 1})</Box>
+                <Table variant="simple" width="fit-content" mr="1rem">
+                  <Tbody>
+                    <Tr>
+                      {calc.map(({ cy }, i) => (
+                        <Td key={i} isNumeric>
+                          {cy}
+                        </Td>
+                      ))}
+                    </Tr>
+                    <Tr>
+                      {calc.map(({ cx }, i) => (
+                        <Td key={i} isNumeric>
+                          {cx}
+                        </Td>
+                      ))}
+                    </Tr>
+                  </Tbody>
+                </Table>
+                <Box ml="auto">{r}</Box>
+              </Flex>
+            ))}
+          </GraphWrapper>
+        </Card>
+      </Fade>
+      <Fade in>
+        <Card title="Data Plot">
+          <GraphWrapper>
+            <ResponsiveContainer width="100%" height="100%">
+              <ScatterChart
+                width={400}
+                height={400}
+                margin={{
+                  top: 20,
+                  right: 20,
+                }}
+              >
+                <CartesianGrid />
+                <XAxis type="number" dataKey="x" name="x" />
+                <YAxis type="number" dataKey="y" name="y" />
+                <Tooltip cursor={{ strokeDasharray: "3 3" }} />
+                <Scatter
+                  data={dots}
+                  fill="#0070f3"
+                  line={{ stroke: "#0070f3" }}
+                  lineType="fitting"
+                />
+              </ScatterChart>
+            </ResponsiveContainer>
+          </GraphWrapper>
+        </Card>
+      </Fade>
     </>
   );
 };

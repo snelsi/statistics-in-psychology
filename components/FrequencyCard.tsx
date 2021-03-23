@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Wrap, WrapItem, Tag } from "@chakra-ui/react";
+import { Wrap, WrapItem, Tag, Fade } from "@chakra-ui/react";
 import { Card } from "components";
 
 interface FrequencyCardProps {
@@ -29,29 +29,31 @@ const FrequencyCard: React.FC<FrequencyCardProps> = ({ data }) => {
   ]);
 
   return (
-    <Card title="Frequency">
-      <Wrap>
-        {data.length ? (
-          stats.map(({ x, frequency }) => {
-            let colorScheme: string | undefined;
-            if (frequency === frequencies[0]) {
-              colorScheme = "purple";
-            } else if (frequency === frequencies[1]) {
-              colorScheme = "teal";
-            } else if (frequency === frequencies[2]) {
-              colorScheme = "yellow";
-            }
-            return (
-              <WrapItem key={x}>
-                <Tag colorScheme={colorScheme}>{`${x} - ${frequency}`}</Tag>
-              </WrapItem>
-            );
-          })
-        ) : (
-          <div>-</div>
-        )}
-      </Wrap>
-    </Card>
+    <Fade in>
+      <Card title="Frequency">
+        <Wrap>
+          {data.length ? (
+            stats.map(({ x, frequency }) => {
+              let colorScheme: string | undefined;
+              if (frequency === frequencies[0]) {
+                colorScheme = "purple";
+              } else if (frequency === frequencies[1]) {
+                colorScheme = "teal";
+              } else if (frequency === frequencies[2]) {
+                colorScheme = "yellow";
+              }
+              return (
+                <WrapItem key={x}>
+                  <Tag colorScheme={colorScheme}>{`${x} - ${frequency}`}</Tag>
+                </WrapItem>
+              );
+            })
+          ) : (
+            <div>-</div>
+          )}
+        </Wrap>
+      </Card>
+    </Fade>
   );
 };
 

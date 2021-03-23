@@ -14,6 +14,7 @@ import {
   StatNumber,
   StatHelpText,
   StatGroup,
+  Fade,
 } from "@chakra-ui/react";
 import { Card } from "components";
 import { roundTo } from "utils";
@@ -104,6 +105,8 @@ const RelationTag: React.FC<RelationTagProps> = ({ t }) => {
   return <StatHelpText color="red.400">No dependency</StatHelpText>;
 };
 
+const wideStyled = { gridColumn: "1 / -1" };
+
 interface RangsProps {
   data: { x: number; y: number; id: string | number }[];
 }
@@ -131,71 +134,73 @@ const Rangs: React.FC<RangsProps> = ({ data }) => {
   const t = (2 * sum) / (n * n - n);
 
   return (
-    <Card title="Rangs" wide>
-      <Box overflow="auto" marginBottom="1rem">
-        <StyledTable variant="simple" mb="1rem">
-          <Thead>
-            <Tr>
-              <Th>Y rang</Th>
-              {rangedData.map((d, i) => (
-                <Th key={i} isNumeric>
-                  {d.rang2}
-                </Th>
-              ))}
-            </Tr>
-          </Thead>
+    <Fade in style={wideStyled}>
+      <Card title="Rangs">
+        <Box overflow="auto" marginBottom="1rem">
+          <StyledTable variant="simple" mb="1rem">
+            <Thead>
+              <Tr>
+                <Th>Y rang</Th>
+                {rangedData.map((d, i) => (
+                  <Th key={i} isNumeric>
+                    {d.rang2}
+                  </Th>
+                ))}
+              </Tr>
+            </Thead>
 
-          <Tbody>
-            <Tr>
-              <Th>Y</Th>
-              {rangedData.map(({ y, id }) => (
-                <Td key={id} isNumeric>
-                  {y}
-                </Td>
-              ))}
-            </Tr>
-            <Tr>
-              <Th>X</Th>
-              {rangedData.map(({ x, id }) => (
-                <Td key={id} isNumeric>
-                  {x}
-                </Td>
-              ))}
-            </Tr>
-          </Tbody>
+            <Tbody>
+              <Tr>
+                <Th>Y</Th>
+                {rangedData.map(({ y, id }) => (
+                  <Td key={id} isNumeric>
+                    {y}
+                  </Td>
+                ))}
+              </Tr>
+              <Tr>
+                <Th>X</Th>
+                {rangedData.map(({ x, id }) => (
+                  <Td key={id} isNumeric>
+                    {x}
+                  </Td>
+                ))}
+              </Tr>
+            </Tbody>
 
-          <Tfoot>
-            <Tr>
-              <Th>X Rang</Th>
-              {rangedData.map((d, i) => (
-                <Th key={i} isNumeric>
-                  {d.rang1}
-                </Th>
-              ))}
-            </Tr>
-          </Tfoot>
-        </StyledTable>
-      </Box>
+            <Tfoot>
+              <Tr>
+                <Th>X Rang</Th>
+                {rangedData.map((d, i) => (
+                  <Th key={i} isNumeric>
+                    {d.rang1}
+                  </Th>
+                ))}
+              </Tr>
+            </Tfoot>
+          </StyledTable>
+        </Box>
 
-      <StyledStatGroup>
-        <Stat>
-          <StatLabel>Kendall coefficient</StatLabel>
-          <StatNumber title={`(2 * ${sum}) / (${n}^2 - ${n})`}>{roundTo(t, 7)}</StatNumber>
-          <RelationTag t={t} />
-        </Stat>
+        <StyledStatGroup>
+          <Stat>
+            <StatLabel>Kendall coefficient</StatLabel>
+            <StatNumber title={`(2 * ${sum}) / (${n}^2 - ${n})`}>{roundTo(t, 7)}</StatNumber>
+            <RelationTag t={t} />
+          </Stat>
 
-        <Stat>
-          <StatLabel>Sum</StatLabel>
-          <StatNumber>{roundTo(sum, 7)}</StatNumber>
-          <StatHelpText>
-            {calcData
-              .slice(0, -1)
-              .map((d) => d.r)
-              .join(" + ")}
-          </StatHelpText>
-        </Stat>
-      </StyledStatGroup>
-    </Card>
+          <Stat>
+            <StatLabel>Sum</StatLabel>
+            <StatNumber>{roundTo(sum, 7)}</StatNumber>
+            <StatHelpText>
+              {calcData
+                .slice(0, -1)
+                .map((d) => d.r)
+                .join(" + ")}
+            </StatHelpText>
+          </Stat>
+        </StyledStatGroup>
+      </Card>
+    </Fade>
   );
 };
 
