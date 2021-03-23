@@ -23,7 +23,7 @@ export const Sidebar = styled.div`
   box-shadow: 0 25px 56px 0 rgb(96 101 123 / 5%);
   max-width: 100%;
   height: auto;
-  padding: 1rem;
+  padding: 1.5rem 1rem 1rem;
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
