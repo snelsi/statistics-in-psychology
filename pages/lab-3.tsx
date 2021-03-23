@@ -135,7 +135,6 @@ const Lab3 = () => {
             d.push(...values);
           });
         }}
-        key={`1-${data1.length}-${ranges1.length}`}
       />
       <Intervals
         title="Array 2 Ranges"
@@ -147,7 +146,6 @@ const Lab3 = () => {
             d.push(...values);
           });
         }}
-        key={`2-${data2.length}-${ranges2.length}`}
       />
     </Layout>
   );

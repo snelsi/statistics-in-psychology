@@ -245,7 +245,7 @@ const Intervals: React.FC<IntervalsProps> = ({
           </ButtonGroup>
         </StyledFlex>
 
-        <Wrapper>
+        <Wrapper key={`${data.length}-${values.length}`}>
           <Range
             allowOverlap
             values={values}
