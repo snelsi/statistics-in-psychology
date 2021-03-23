@@ -47,6 +47,13 @@ const Graphs = styled.div<GraphsProps>`
   height: auto;
   padding: 1.25rem;
   overflow: auto;
+
+  &::after {
+    content: "";
+    display: block;
+    height: 0.1px;
+  }
+
   @media (max-width: 800px) {
     grid-template-columns: 1fr;
     padding-left: 0;
