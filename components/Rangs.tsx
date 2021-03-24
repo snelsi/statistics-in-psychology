@@ -13,10 +13,9 @@ import {
   StatLabel,
   StatNumber,
   StatHelpText,
-  StatGroup,
   Fade,
 } from "@chakra-ui/react";
-import { Card } from "components";
+import { Card, StyledStatGroup } from "components";
 import { roundTo, useLab2 } from "utils";
 
 const StyledTable = styled(Table)`
@@ -27,20 +26,6 @@ const StyledTable = styled(Table)`
       border-right: var(--chakra-borders-1px) var(--chakra-colors-gray-100);
       position: sticky;
       left: 0;
-    }
-  }
-`;
-const StyledStatGroup = styled(StatGroup)`
-  align-items: center;
-  background: var(--chakra-colors-gray-50);
-  border-radius: 8px;
-  flex-wrap: wrap;
-  padding: 1rem;
-  & .chakra-stat {
-    min-width: 120px;
-    @media (max-width: 800px) {
-      min-width: 100%;
-      margin-right: 0;
     }
   }
 `;

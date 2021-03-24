@@ -1,7 +1,9 @@
 import { atom, useRecoilState } from "recoil";
 
-const initialData1: number[] = [20, 50, 80];
-const initialData2: number[] = [25, 40, 55];
+const initialData1: number[] = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+const initialRanges1: number[] = [8, 15, 22];
+const initialData2: number[] = [14, 15, 15, 16, 16, 16, 16, 18, 18, 20];
+const initialRanges2: number[] = [8, 15, 22];
 
 const data1lab4State = atom({
   key: "data1lab4State",
@@ -10,7 +12,7 @@ const data1lab4State = atom({
 
 const ranges1lab4State = atom({
   key: "ranges1lab4State",
-  default: initialData1,
+  default: initialRanges1,
 });
 
 const data2lab4State = atom({
@@ -20,7 +22,7 @@ const data2lab4State = atom({
 
 const ranges2lab4State = atom({
   key: "ranges2lab4State",
-  default: initialData2,
+  default: initialRanges2,
 });
 
 const useLab4 = () => {

@@ -1,20 +1,7 @@
 import * as React from "react";
-import styled from "@emotion/styled";
-import { Stat, StatLabel, StatNumber, StatHelpText, StatGroup, Fade } from "@chakra-ui/react";
-import { Card } from "components";
+import { Stat, StatLabel, StatNumber, StatHelpText, Fade } from "@chakra-ui/react";
+import { Card, StyledStatGroup } from "components";
 import { roundTo } from "utils";
-
-const StyledStatGroup = styled(StatGroup)`
-  flex-wrap: wrap;
-  & .chakra-stat {
-    min-width: 120px;
-    & .chakra-stat__number {
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
-  }
-`;
 
 interface DependencyTagProps {
   g: number;

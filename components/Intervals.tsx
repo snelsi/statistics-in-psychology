@@ -19,10 +19,9 @@ import {
   StatLabel,
   StatNumber,
   StatHelpText,
-  StatGroup,
   Fade,
 } from "@chakra-ui/react";
-import { Card } from "components";
+import { Card, StyledStatGroup } from "components";
 import { roundTo } from "utils";
 
 interface AsymmetryTagProps {
@@ -38,20 +37,6 @@ const AsymmetryTag: React.FC<AsymmetryTagProps> = ({ A }) => {
   return <StatHelpText>No asymmetry</StatHelpText>;
 };
 
-const StyledStatGroup = styled(StatGroup)`
-  align-items: center;
-  background: var(--chakra-colors-gray-50);
-  border-radius: 8px;
-  flex-wrap: wrap;
-  padding: 1rem;
-  & .chakra-stat {
-    min-width: 120px;
-    @media (max-width: 800px) {
-      min-width: 100%;
-      margin-right: 0;
-    }
-  }
-`;
 const StyledFlex = styled(Flex)`
   @media (max-width: 800px) {
     flex-direction: column;
@@ -148,6 +133,7 @@ interface IntervalsProps {
   min?: number;
   max?: number;
   step?: number;
+  showStats?: boolean;
 }
 const Intervals: React.FC<IntervalsProps> = ({
   data,
@@ -157,6 +143,7 @@ const Intervals: React.FC<IntervalsProps> = ({
   min = 0,
   max = 100,
   step = 0.1,
+  showStats = true,
 }) => {
   const rangeRef: any = React.useRef<Range>();
 
@@ -284,7 +271,7 @@ const Intervals: React.FC<IntervalsProps> = ({
           />
         </Wrapper>
 
-        <Box overflow="auto" marginTop="1rem" marginBottom="1rem">
+        <Box overflow="auto" marginTop="1rem" marginBottom={showStats ? "1rem" : undefined}>
           <Table variant="simple" mb="1rem">
             <Thead>
               <Tr>
@@ -314,37 +301,39 @@ const Intervals: React.FC<IntervalsProps> = ({
           </Table>
         </Box>
 
-        <StyledStatGroup>
-          <Stat>
-            <StatLabel>Delta</StatLabel>
-            <StatNumber>{delta}</StatNumber>
-            <StatHelpText>{`${k} * ${h} - (${xmax} - ${xmin})`}</StatHelpText>
-          </Stat>
+        {showStats && (
+          <StyledStatGroup>
+            <Stat>
+              <StatLabel>Delta</StatLabel>
+              <StatNumber>{delta}</StatNumber>
+              <StatHelpText>{`${k} * ${h} - (${xmax} - ${xmin})`}</StatHelpText>
+            </Stat>
 
-          <Stat>
-            <StatLabel>h</StatLabel>
-            <StatNumber>{h}</StatNumber>
-            <StatHelpText>{`(${xmax} - ${xmin}) / ${k}`}</StatHelpText>
-          </Stat>
+            <Stat>
+              <StatLabel>h</StatLabel>
+              <StatNumber>{h}</StatNumber>
+              <StatHelpText>{`(${xmax} - ${xmin}) / ${k}`}</StatHelpText>
+            </Stat>
 
-          <Stat>
-            <StatLabel>k</StatLabel>
-            <StatNumber>{k}</StatNumber>
-            <StatHelpText>{`1 + log2(${n})`}</StatHelpText>
-          </Stat>
+            <Stat>
+              <StatLabel>k</StatLabel>
+              <StatNumber>{k}</StatNumber>
+              <StatHelpText>{`1 + log2(${n})`}</StatHelpText>
+            </Stat>
 
-          <Stat>
-            <StatLabel>A</StatLabel>
-            <StatNumber title={`${roundTo(m3)} / ${roundTo(sigma3)}`}>{roundTo(A, 3)}</StatNumber>
-            <AsymmetryTag A={A} />
-          </Stat>
+            <Stat>
+              <StatLabel>A</StatLabel>
+              <StatNumber title={`${roundTo(m3)} / ${roundTo(sigma3)}`}>{roundTo(A, 3)}</StatNumber>
+              <AsymmetryTag A={A} />
+            </Stat>
 
-          <Stat>
-            <StatLabel>E</StatLabel>
-            <StatNumber title={String(E)}>{roundTo(E, 3)}</StatNumber>
-            <StatHelpText>{`${roundTo(m4)} / ${roundTo(sigma4)} - 3`}</StatHelpText>
-          </Stat>
-        </StyledStatGroup>
+            <Stat>
+              <StatLabel>E</StatLabel>
+              <StatNumber title={String(E)}>{roundTo(E, 3)}</StatNumber>
+              <StatHelpText>{`${roundTo(m4)} / ${roundTo(sigma4)} - 3`}</StatHelpText>
+            </Stat>
+          </StyledStatGroup>
+        )}
       </Card>
     </Fade>
   );
