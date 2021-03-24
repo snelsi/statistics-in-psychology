@@ -2,6 +2,7 @@ import * as React from "react";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { RecoilRoot } from "recoil";
 
 const theme = extendTheme({
   colors: {
@@ -18,7 +19,9 @@ import "css/styles.css";
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
+      <RecoilRoot>
+        <Component {...pageProps} />
+      </RecoilRoot>
       <Head>
         <link rel="icon" href="favicon.svg" />
         <link rel="apple-touch-icon" href="logo192.png" />

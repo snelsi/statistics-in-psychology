@@ -42,29 +42,34 @@ const Mode: React.FC<ModeProps> = ({ data }) => {
   const antimode = stats.filter((stat) => stat.frequency === stats[stats.length - 1].frequency);
 
   const halfLength = Math.ceil(data.length / 2);
-  const left = data[halfLength - 1].x;
-  const right = data[halfLength].x;
+  const left = data[halfLength - 1]?.x || 0;
+  const right = data[halfLength]?.x || 0;
 
   const mid = Math.ceil(data.length / 2);
 
-  const median = data.length % 2 ? data[mid - 1].x : (data[mid].x + data[mid - 1].x) / 2;
+  let median;
+  try {
+    median = data.length % 2 ? data[mid - 1].x : (data[mid].x + data[mid - 1].x) / 2;
+  } catch {
+    median = 0;
+  }
 
   return (
     <StyledStatGroup>
       <Stat mr="2rem">
         <StatLabel>Mode</StatLabel>
         <StatNumber>{mode.map((m) => m.x).join(", ")}</StatNumber>
-        <StatHelpText>{mode[0].frequency} times</StatHelpText>
+        <StatHelpText>{mode[0]?.frequency || 0} times</StatHelpText>
       </Stat>
 
       <Stat mr="2rem">
         <StatLabel>Anti-Mode</StatLabel>
-        {stats[0].frequency === stats[stats.length - 1].frequency ? (
+        {stats[0]?.frequency === stats[stats.length - 1]?.frequency ? (
           <StatNumber>-</StatNumber>
         ) : (
           <>
             <StatNumber>{antimode.map((m) => m.x).join(", ")}</StatNumber>
-            <StatHelpText>{antimode[0].frequency} times</StatHelpText>
+            <StatHelpText>{antimode?.[0]?.frequency || 0} times</StatHelpText>
           </>
         )}
       </Stat>
@@ -74,7 +79,7 @@ const Mode: React.FC<ModeProps> = ({ data }) => {
         <StatNumber>{median}</StatNumber>
         {data.length % 2 === 0 && left !== right && (
           <StatHelpText as="span">
-            ({data[halfLength - 1].x}/{data[halfLength].x})
+            ({data[halfLength - 1]?.x || 0}/{data[halfLength]?.x || 0})
           </StatHelpText>
         )}
       </Stat>

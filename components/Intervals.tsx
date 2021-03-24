@@ -198,7 +198,7 @@ const Intervals: React.FC<IntervalsProps> = ({
       });
     }
     return ranges;
-  }, [data, values]);
+  }, [data, values, avg]);
 
   const D = ranges.reduce((acc, v) => acc + v.xi2, 0) / n;
   const sigma = Math.sqrt(D);

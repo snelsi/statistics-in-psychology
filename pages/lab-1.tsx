@@ -1,9 +1,9 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useImmer } from "use-immer";
 import { Button, Heading, Text, Fade } from "@chakra-ui/react";
 import styled from "@emotion/styled";
+import { useLab1 } from "utils";
 
 const Tex2SVG = dynamic(() => import("react-hook-mathjax"), { ssr: false });
 
@@ -20,13 +20,6 @@ const gxyFormula =
   "g_{xy} = \\frac{ \\displaystyle\\sum_{j=1}^{m} \\max_{i=\\overline{1,k}}n_{ij} - \\max_{i=\\overline{1,k}}n_{xi}}{n - \\displaystyle\\max_{i=\\overline{1,k}}n_{xi}}";
 const gyxFormula =
   "g_{yx} = \\frac{ \\displaystyle\\sum_{i=1}^{k} \\max_{j=\\overline{1,m}}n_{ij} - \\max_{j=\\overline{1,m}}n_{yj}}{n - \\displaystyle\\max_{j=\\overline{1,m}}n_{yj}}";
-
-const initialData = [
-  [52, 7, 3, 18, 33],
-  [24, 72, 7, 6, 25],
-  [42, 5, 0, 21, 11],
-  [5, 2, 2, 43, 1],
-];
 
 const sidebar = (
   <Fade in>
@@ -53,15 +46,15 @@ const sidebar = (
 );
 
 const Lab1 = () => {
-  const [data, setData] = useImmer<number[][]>(initialData);
+  const { data } = useLab1();
 
-  const xData = React.useMemo(() => data.map((row) => row.map((x) => ({ x }))).flat(), [data]);
+  const values = data.flat();
 
   return (
     <Layout title="Лабораторна 1" sidebar={sidebar}>
       <Goodman data={data} />
-      <DataTable data={data} setData={setData} />
-      <FrequencyCard data={xData} />
+      <DataTable />
+      <FrequencyCard data={values} />
     </Layout>
   );
 };

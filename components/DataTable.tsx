@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { FiRefreshCw } from "react-icons/fi";
 import { Card, NumberInput, Mode } from "components";
-import { getRandomNumber } from "utils";
+import { useLab1 } from "utils";
 
 const StyledFlex = styled(Flex)`
   @media (max-width: 800px) {
@@ -64,86 +64,21 @@ const StyledTable = styled(Table)`
   }
 `;
 
-interface DataTableProps {
-  data: number[][];
-  setData: (f: (draft: number[][]) => any) => void;
-}
-const DataTable: React.FC<DataTableProps> = ({ data, setData }) => {
-  const rows = data?.length || 1;
-  const columns = data?.[0]?.length || 1;
-
-  const setRows = (newRows: number) => {
-    if (newRows < rows) {
-      setData((data) => {
-        data.length = newRows;
-      });
-    } else {
-      setData((data) => {
-        for (let i = rows; i < newRows; i++) {
-          data.push(new Array(columns).fill(0));
-        }
-      });
-    }
-  };
-
-  const setColumns = (newColumns: number) => {
-    if (newColumns < columns) {
-      setData((data) => {
-        for (let row of data) {
-          row.length = newColumns;
-        }
-      });
-    } else {
-      setData((data) => {
-        for (let row of data) {
-          for (let i = columns; i < newColumns; i++) {
-            row.push(0);
-          }
-        }
-      });
-    }
-  };
-
-  const setRandomData = () => {
-    setData((data) => {
-      for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < columns; j++) {
-          data[i][j] = getRandomNumber(0, getRandomNumber(0, 40));
-        }
-      }
-    });
-  };
-
-  const resetData = () => {
-    setData((data) => {
-      for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < columns; j++) {
-          data[i][j] = i === j ? 1 : 0;
-        }
-      }
-    });
-  };
-
-  const updateDot = (value: number, i: number, j: number) => {
-    setData((dots) => {
-      dots[i][j] = value;
-    });
-  };
-
-  const nxi = React.useMemo(() => {
-    const arr: number[] = [];
-    for (let i = 0; i < data[0].length; i++) {
-      let n = 0;
-      for (let row of data) {
-        n += row[i];
-      }
-      arr.push(n);
-    }
-    return arr;
-  }, [data]);
-
-  const n = React.useMemo(() => nxi.reduce((acc, value) => acc + value, 0), [nxi]);
-  const xData = React.useMemo(() => data.map((row) => row.map((x) => ({ x }))).flat(), [data]);
+interface DataTableProps {}
+const DataTable: React.FC<DataTableProps> = () => {
+  const {
+    data,
+    setRandomData,
+    rows,
+    columns,
+    setRows,
+    setColumns,
+    resetData,
+    updateDot,
+    nxi,
+    n,
+    xData,
+  } = useLab1();
 
   return (
     <Fade in>
@@ -157,6 +92,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, setData }) => {
               value={rows}
               setValue={setRows}
               min={1}
+              max={100}
               step={1}
               precision={0}
               variant="filled"
@@ -168,6 +104,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, setData }) => {
               value={columns}
               setValue={setColumns}
               min={1}
+              max={100}
               step={1}
               precision={0}
               variant="filled"
@@ -189,7 +126,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, setData }) => {
             <Thead>
               <Tr>
                 <Th />
-                {data[0].map((_, i) => (
+                {data[0]?.map((_, i) => (
                   <Th key={i} isNumeric>
                     {i + 1}
                   </Th>

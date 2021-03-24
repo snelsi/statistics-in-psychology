@@ -40,24 +40,23 @@ interface GraphsProps {
 }
 const Graphs = styled.div<GraphsProps>`
   background-color: #fafafa;
-  display: grid;
-  gap: 1.25rem;
-  grid-template-rows: ${({ layoutRows = "auto" }) => layoutRows};
-  grid-template-columns: ${({ layoutColumns = "1fr" }) => layoutColumns};
   height: auto;
-  padding: 1.25rem;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 
-  &::after {
-    content: "";
-    display: block;
-    height: 0.1px;
-  }
+  & > div {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-rows: ${({ layoutRows = "auto" }) => layoutRows};
+    grid-template-columns: ${({ layoutColumns = "minmax(0, 1fr)" }) => layoutColumns};
+    height: fit-content;
+    padding: 1.25rem;
 
-  @media (max-width: 800px) {
-    grid-template-columns: 1fr;
-    padding-left: 0;
-    padding-right: 0;
+    @media (max-width: 800px) {
+      grid-template-columns: 1fr;
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
 `;
 
@@ -84,7 +83,7 @@ const Layout: React.FC<LayoutProps> = ({
         <div>{sidebar}</div>
       </Sidebar>
       <Graphs layoutRows={layoutRows} layoutColumns={layoutColumns}>
-        {children}
+        <div>{children}</div>
       </Graphs>
     </Wrapper>
   </>

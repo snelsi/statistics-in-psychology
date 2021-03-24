@@ -3,14 +3,14 @@ import { Wrap, WrapItem, Tag, Fade } from "@chakra-ui/react";
 import { Card } from "components";
 
 interface FrequencyCardProps {
-  data: { x: number }[];
+  data: number[];
 }
 
 const FrequencyCard: React.FC<FrequencyCardProps> = ({ data }) => {
   const stats = React.useMemo(() => {
     const stats = new Map<number, number>();
 
-    data.forEach(({ x }) => {
+    data.forEach((x) => {
       if (stats.has(x)) {
         const i = stats.get(x) || 0;
         stats.set(x, i + 1);

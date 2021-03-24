@@ -46,7 +46,7 @@ const getGxy = (data: number[][]) => {
 
   // Сумма столбца
   const nxi: number[] = [];
-  for (let i = 0; i < data[0].length; i++) {
+  for (let i = 0; i < (data[0]?.length || 0); i++) {
     let n = 0;
     for (let row of data) {
       n += row[i] || 0;
@@ -57,7 +57,7 @@ const getGxy = (data: number[][]) => {
   const n = nxi.reduce((acc, value) => acc + (value || 0), 0);
 
   // Максимальная сумма столбца
-  const maxnxi = Math.max(...nxi);
+  const maxnxi = nxi.length > 0 ? Math.max(...nxi) : 0;
 
   // Сумма максимумов в рядах
   const sumjm = data.reduce((acc, row) => acc + Math.max(...row.map((d) => d || 0)), 0);
@@ -79,11 +79,11 @@ const getGyx = (data: number[][]) => {
   const n = nyj.reduce((acc, value) => acc + value, 0);
 
   // Максимальная сумма ряда
-  const maxnyj = Math.max(...nyj);
+  const maxnyj = nyj.length > 0 ? Math.max(...nyj) : 0;
 
   // Сумма максимумов в столбцах
   let sumik = 0;
-  for (let i = 0; i < data[0].length; i++) {
+  for (let i = 0; i < (data[0]?.length || 0); i++) {
     sumik += Math.max(...data.map((row) => row[i] || 0));
   }
 

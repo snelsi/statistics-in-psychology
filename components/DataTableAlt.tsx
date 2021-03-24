@@ -39,7 +39,7 @@ interface DataTableProps {
 const DataTableAlt: React.FC<DataTableProps> = ({ data }) => {
   const nxi = React.useMemo(() => {
     const arr: number[] = [];
-    for (let i = 0; i < data[0].data.length; i++) {
+    for (let i = 0; i < (data?.[0]?.data?.length || 0); i++) {
       let n = 0;
       for (let row of data) {
         n += row.data[i].value;
@@ -60,7 +60,7 @@ const DataTableAlt: React.FC<DataTableProps> = ({ data }) => {
             <Thead>
               <Tr>
                 <Th />
-                {data[0].data.map(({ prop2 }) => (
+                {data?.[0]?.data?.map(({ prop2 }) => (
                   <Th key={prop2} isNumeric>
                     {prop2}
                   </Th>

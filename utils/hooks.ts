@@ -1,7 +1,7 @@
 import * as React from "react";
 
 export const useN = (data: { x: number; y: number }[]) => {
-  const n = React.useMemo(() => data?.reduce((acc, { y }) => acc + y, 0) || 0, []);
+  const n = React.useMemo(() => data?.reduce((acc, { y }) => acc + y, 0) || 0, [data]);
   return n;
 };
 
@@ -27,6 +27,6 @@ export const useStats = (data: { x: number; y: number }[]) => {
         ni: sum / n,
       };
     });
-  }, [data]);
+  }, [data, n]);
   return stats;
 };

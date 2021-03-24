@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useImmer } from "use-immer";
 import { FiTrash2, FiPlus } from "react-icons/fi";
 import { Button, IconButton, Heading, Fade } from "@chakra-ui/react";
-import { getRandomNumber } from "utils";
+import { SetterOrUpdater } from "recoil";
+import { getRandomNumber, useLab3 } from "utils";
 import { Layout, Intervals, NumberInput } from "components";
 
 const List = styled.ul`
@@ -25,30 +25,33 @@ const List = styled.ul`
 
 interface DataInputProps {
   data: number[];
-  setData: (f: (dots: number[]) => void) => void;
+  setData: SetterOrUpdater<number[]>;
   title?: React.ReactNode;
 }
 const DataInput: React.FC<DataInputProps> = ({ data, setData, title }) => {
   const setRandomData = () => {
-    setData((dots) => {
-      dots.length = 0;
-      let j = 10000;
-      while (j > 0) {
-        dots.push(getRandomNumber(1, 99));
-        j = getRandomNumber(0, j - 1);
-      }
-    });
+    const arr: number[] = [];
+    let j = 10000;
+    while (j > 0) {
+      arr.push(getRandomNumber(1, 99));
+      j = getRandomNumber(0, j - 1);
+    }
+    setData(arr);
   };
 
   const updateX = (value: number, i: number) => {
     setData((dots) => {
-      dots[i] = value;
+      const arr = [...dots];
+      arr[i] = value;
+      return arr;
     });
   };
 
   const removeDot = (i: number) => {
     setData((dots) => {
-      dots.splice(i, 1);
+      const arr = [...dots];
+      arr.splice(i, 1);
+      return arr;
     });
   };
 
@@ -58,7 +61,9 @@ const DataInput: React.FC<DataInputProps> = ({ data, setData, title }) => {
       i++;
     }
     setData((dots) => {
-      dots.push(i);
+      const arr = [...dots];
+      arr.push(i);
+      return arr;
     });
   };
 
@@ -107,14 +112,9 @@ const DataInput: React.FC<DataInputProps> = ({ data, setData, title }) => {
     </>
   );
 };
-const initialData1 = [20, 50, 80];
-const initialData2 = [25, 40, 55];
 
 const Lab3 = () => {
-  const [data1, setData1] = useImmer<number[]>(initialData1);
-  const [ranges1, setRanges1] = useImmer<number[]>(data1);
-  const [data2, setData2] = useImmer<number[]>(initialData2);
-  const [ranges2, setRanges2] = useImmer<number[]>(data2);
+  const { data1, setData1, data2, setData2, ranges1, setRanges1, ranges2, setRanges2 } = useLab3();
 
   const sidebar = (
     <Fade in>
@@ -125,28 +125,8 @@ const Lab3 = () => {
 
   return (
     <Layout title="Лабораторна 3" sidebar={sidebar} layoutRows="auto auto">
-      <Intervals
-        title="Array 1 Ranges"
-        data={data1}
-        values={ranges1}
-        setValues={(values) => {
-          setRanges1((d) => {
-            d.length = 0;
-            d.push(...values);
-          });
-        }}
-      />
-      <Intervals
-        title="Array 2 Ranges"
-        data={data2}
-        values={ranges2}
-        setValues={(values) => {
-          setRanges2((d) => {
-            d.length = 0;
-            d.push(...values);
-          });
-        }}
-      />
+      <Intervals title="Array 1 Ranges" data={data1} values={ranges1} setValues={setRanges1} />
+      <Intervals title="Array 2 Ranges" data={data2} values={ranges2} setValues={setRanges2} />
     </Layout>
   );
 };

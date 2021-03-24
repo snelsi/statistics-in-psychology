@@ -15,6 +15,8 @@ const NumberInput: React.FC<NumberInputProps> = ({
   value,
   setValue,
   placeholder = "0",
+  min,
+  max,
   ...props
 }) => {
   const [inputValue, setInputValue] = React.useState<string | number>(value);
@@ -31,9 +33,18 @@ const NumberInput: React.FC<NumberInputProps> = ({
       onChange={(valueAsString, valueAsNumber) => {
         setInputValue(valueAsString);
         if (isNumberString(valueAsString)) {
-          setValue(valueAsNumber);
+          let value = valueAsNumber;
+          if (typeof min === "number") {
+            value = Math.max(min, value);
+          }
+          if (typeof max === "number") {
+            value = Math.min(max, value);
+          }
+          setValue(value);
         }
       }}
+      min={min}
+      max={max}
       {...props}
     >
       <NumberInputField placeholder={placeholder} />

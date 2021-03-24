@@ -1,27 +1,17 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useImmer } from "use-immer";
-import {
-  ScatterChart,
-  Scatter,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
-import { uid } from "uid";
 import { FiTrash2, FiPlus } from "react-icons/fi";
-import { Button, IconButton, Heading } from "@chakra-ui/react";
-import { Layout, NTable, NumberInput } from "components";
-import { getRandomNumber } from "utils";
+import { Button, IconButton, Heading, Fade } from "@chakra-ui/react";
+import { SetterOrUpdater } from "recoil";
+import { getRandomNumber, useLab4 } from "utils";
+import { Layout, Intervals, NumberInput } from "components";
 
 const List = styled.ul`
   list-style: none;
   & li {
     display: grid;
     margin-bottom: 0.4rem;
-    grid-template-columns: 1fr 1fr auto;
+    grid-template-columns: 1fr auto auto;
     gap: 0.4rem;
     width: 100%;
     & .chakra-checkbox__control {
@@ -32,111 +22,73 @@ const List = styled.ul`
     }
   }
 `;
-const Graphs = styled.div`
-  display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
-  height: auto;
-  padding: 1rem;
-  overflow: hidden;
-`;
-const GraphWrapper = styled.div`
-  overflow: hidden;
-`;
 
-const initialData = [
-  { x: 8, y: 12, id: 1 },
-  { x: 9, y: 7, id: 2 },
-  { x: 13, y: 23, id: 3 },
-  { x: 16, y: 37, id: 4 },
-  { x: 32, y: 45, id: 5 },
-  { x: 41, y: 52, id: 6 },
-  { x: 48, y: 34, id: 7 },
-  { x: 49, y: 38, id: 8 },
-];
-
-const CustomShape = () => null;
-
-interface Dot {
-  x: number;
-  y: number;
-  id: string | number;
+interface DataInputProps {
+  data: number[];
+  setData: SetterOrUpdater<number[]>;
+  title?: React.ReactNode;
 }
-
-const Lab1 = () => {
-  const [data, setData] = useImmer<Dot[]>(initialData);
-
-  const dots = React.useMemo(
-    () =>
-      [...data].map((dot, i) => ({ ...dot, i, name: `x: ${dot.x}` })).sort((a, b) => a.x - b.x) ||
-      [],
-    [data],
-  );
-
+const DataInput: React.FC<DataInputProps> = ({ data, setData, title }) => {
   const setRandomData = () => {
-    setData((dots) => {
-      dots.length = 0;
-      let i = 10000;
-      while (i > 0) {
-        dots.push({ x: getRandomNumber(1, 99), y: getRandomNumber(1, 99), id: uid() });
-        i = getRandomNumber(0, i - 1);
-      }
-    });
+    const arr: number[] = [];
+    let j = 10000;
+    while (j > 0) {
+      arr.push(getRandomNumber(1, 99));
+      j = getRandomNumber(0, j - 1);
+    }
+    setData(arr);
   };
 
-  const updateDot = (value: number, i: number, prop: "x" | "y") => {
+  const updateX = (value: number, i: number) => {
     setData((dots) => {
-      dots[i][prop] = value;
+      const arr = [...dots];
+      arr[i] = value;
+      return arr;
     });
   };
 
   const removeDot = (i: number) => {
     setData((dots) => {
-      dots.splice(i, 1);
+      const arr = [...dots];
+      arr.splice(i, 1);
+      return arr;
     });
   };
 
   const addDot = () => {
+    let i = 0;
+    while (data.hasOwnProperty(i)) {
+      i++;
+    }
     setData((dots) => {
-      dots.push({ x: 1, y: 1, id: uid() });
+      const arr = [...dots];
+      arr.push(i);
+      return arr;
     });
   };
 
-  const averageLine = React.useMemo(() => {
-    if (!data || data.length === 0) return null;
-    const stats = new Map<number, number[]>();
-    data.forEach(({ x, y }) => {
-      const statsX = stats.get(x);
-      if (statsX) {
-        stats.set(x, [...statsX, y]);
-      } else {
-        stats.set(x, [y]);
-      }
-    });
-    return Array.from(stats.entries()).map(([x, values]) => ({
-      x,
-      id: x,
-      y: values.reduce((acc, v) => acc + v, 0) / values.length,
-    }));
-  }, [data]);
-
-  const sidebar = (
+  return (
     <>
-      <Heading as="h2" size="lg" mb="1rem" fontWeight="600">
-        Data
-      </Heading>
+      {title && (
+        <Heading as="h2" size="md" mb="1rem" fontWeight="600">
+          {title}
+        </Heading>
+      )}
       <List>
-        {data.map((dot, i) => (
-          <li key={dot.id}>
-            <NumberInput value={dot.x} setValue={(newX) => updateDot(newX, i, "x")} />
-            <NumberInput value={dot.y} setValue={(newY) => updateDot(newY, i, "y")} />
-            <IconButton
-              onClick={() => removeDot(i)}
-              type="button"
-              aria-label="delete"
-              icon={<FiTrash2 />}
-            />
-          </li>
-        ))}
+        {data.map((x, i) => {
+          const numX = Number(x);
+          return (
+            <li key={i}>
+              <NumberInput value={numX} setValue={(newX) => updateX(newX, i)} />
+              <IconButton
+                onClick={() => removeDot(i)}
+                type="button"
+                aria-label="delete"
+                icon={<FiTrash2 />}
+              />
+            </li>
+          );
+        })}
       </List>
       <Button
         onClick={addDot}
@@ -153,48 +105,30 @@ const Lab1 = () => {
         className="button-create"
         isFullWidth
         leftIcon={<span>🎲</span>}
+        mb="1.5rem"
       >
         Random
       </Button>
     </>
   );
+};
+
+const Lab4 = () => {
+  const { data1, setData1, data2, setData2, ranges1, setRanges1, ranges2, setRanges2 } = useLab4();
+
+  const sidebar = (
+    <Fade in>
+      <DataInput data={data1} setData={setData1} title="Array 1" />
+      <DataInput data={data2} setData={setData2} title="Array 2" />
+    </Fade>
+  );
 
   return (
-    <Layout sidebar={sidebar}>
-      <Graphs>
-        <GraphWrapper>
-          <ResponsiveContainer width="100%" height="100%">
-            <ScatterChart
-              width={400}
-              height={400}
-              margin={{
-                top: 20,
-                right: 20,
-                bottom: 20,
-                left: 20,
-              }}
-            >
-              <CartesianGrid />
-              <XAxis type="number" dataKey="x" name="x" />
-              <YAxis type="number" dataKey="y" name="y" />
-              <Tooltip cursor={{ strokeDasharray: "3 3" }} />
-              <Scatter data={dots} fill="#0070f3" line={{ stroke: "#0070f3" }} lineType="fitting" />
-              {averageLine && (
-                <Scatter
-                  data={averageLine}
-                  shape={<CustomShape />}
-                  line
-                  lineType="fitting"
-                  fill="#ff4e42"
-                />
-              )}
-            </ScatterChart>
-          </ResponsiveContainer>
-        </GraphWrapper>
-        <NTable data={dots} />
-      </Graphs>
+    <Layout title="Лабораторна 4" sidebar={sidebar} layoutRows="auto auto">
+      <Intervals title="Array 1 Ranges" data={data1} values={ranges1} setValues={setRanges1} />
+      <Intervals title="Array 2 Ranges" data={data2} values={ranges2} setValues={setRanges2} />
     </Layout>
   );
 };
 
-export default Lab1;
+export default Lab4;

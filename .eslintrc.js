@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ["alloy", "alloy/react", "alloy/typescript", "react-hooks"],
+  extends: ["alloy", "alloy/react", "alloy/typescript", "plugin:react-hooks/recommended"],
   env: {
     browser: true,
   },

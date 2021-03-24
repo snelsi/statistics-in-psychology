@@ -17,7 +17,7 @@ import {
   Fade,
 } from "@chakra-ui/react";
 import { Card } from "components";
-import { roundTo } from "utils";
+import { roundTo, useLab2 } from "utils";
 
 const StyledTable = styled(Table)`
   & th,
@@ -45,44 +45,6 @@ const StyledStatGroup = styled(StatGroup)`
   }
 `;
 
-const getRange = (data: { x: number; y: number }[], sortProp: "x" | "y", rangeProp: string) => {
-  const sortedData: { x: number; y: number; [x: string]: number }[] = [...data]
-    .sort((a, b) => a[sortProp] - b[sortProp])
-    .map((d) => ({ ...d }));
-
-  for (let i = 0; i < sortedData.length; i++) {
-    const cur = sortedData[i][sortProp];
-    let j = i;
-    while (j + 1 < sortedData.length && sortedData[j + 1][sortProp] === cur) {
-      j++;
-    }
-    for (let k = i; k <= j; k++) {
-      sortedData[k][rangeProp] = 1 + (i + j) / 2;
-    }
-    i = j;
-  }
-
-  return sortedData;
-};
-
-export const useRange = (data: { x: number; y: number }[]) => {
-  const rangedData = React.useMemo(() => {
-    let rangedData = getRange(data, "x", "rang1");
-    rangedData = getRange(rangedData, "y", "rang2");
-    rangedData = [...rangedData].sort((a, b) => a.x - b.x);
-
-    return rangedData;
-  }, [data]);
-
-  return rangedData;
-};
-
-export const calcRang = (r1: number, r2: number) => {
-  if (r2 > r1) return 1;
-  if (r2 < r1) return -1;
-  return 0;
-};
-
 interface RelationTagProps {
   t: number;
 }
@@ -107,26 +69,9 @@ const RelationTag: React.FC<RelationTagProps> = ({ t }) => {
 
 const wideStyled = { gridColumn: "1 / -1" };
 
-interface RangsProps {
-  data: { x: number; y: number; id: string | number }[];
-}
-const Rangs: React.FC<RangsProps> = ({ data }) => {
-  const rangedData = useRange(data);
-
-  const calcData = rangedData.map((range, i) => {
-    const calc = [...rangedData].slice(i + 1).map((d) => ({
-      ...d,
-      cx: calcRang(range.rang1, d.rang1),
-      cy: calcRang(range.rang2, d.rang2),
-    }));
-    const r = calc.reduce((acc, d) => acc + d.cx * d.cy, 0);
-
-    return {
-      ...range,
-      calc,
-      r,
-    };
-  });
+interface RangsProps {}
+const Rangs: React.FC<RangsProps> = () => {
+  const { rangedData, calcData } = useLab2();
 
   const sum = calcData.reduce((acc, d) => acc + d.r, 0);
   const n = calcData.length;

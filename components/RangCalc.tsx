@@ -11,24 +11,16 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Card } from "components";
-import { useRange } from "./Rangs";
+import { useLab2 } from "utils";
 
 const GraphWrapper = styled.div`
   overflow: auto;
   height: clamp(240px, 35vw, 600px);
 `;
 
-const calcRang = (r1: number, r2: number) => {
-  if (r2 > r1) return 1;
-  if (r2 < r1) return -1;
-  return 0;
-};
-
-interface RangCalcProps {
-  data: { x: number; y: number }[];
-}
-const RangCalc: React.FC<RangCalcProps> = ({ data }) => {
-  const rangedData = useRange(data);
+interface RangCalcProps {}
+const RangCalc: React.FC<RangCalcProps> = () => {
+  const { data, calcData } = useLab2();
 
   const dots = React.useMemo(
     () =>
@@ -36,21 +28,6 @@ const RangCalc: React.FC<RangCalcProps> = ({ data }) => {
       [],
     [data],
   );
-
-  const calcData = rangedData.map((range, i) => {
-    const calc = [...rangedData].slice(i + 1).map((d) => ({
-      ...d,
-      cx: calcRang(range.rang1, d.rang1),
-      cy: calcRang(range.rang2, d.rang2),
-    }));
-    const r = calc.reduce((acc, d) => acc + d.cx * d.cy, 0);
-
-    return {
-      ...range,
-      calc,
-      r,
-    };
-  });
 
   return (
     <>
