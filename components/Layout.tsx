@@ -43,6 +43,7 @@ const Graphs = styled.div<GraphsProps>`
   height: auto;
   overflow-x: hidden;
   overflow-y: auto;
+  width: 100%;
 
   & > div {
     display: grid;
@@ -51,6 +52,16 @@ const Graphs = styled.div<GraphsProps>`
     grid-template-columns: ${({ layoutColumns = "minmax(0, 1fr)" }) => layoutColumns};
     height: fit-content;
     padding: 1.25rem;
+    overflow-x: hidden;
+    max-width: 100%;
+    width: 100%;
+
+    & .chakra-fade {
+      display: block;
+      max-width: 100%;
+      overflow: hidden;
+      width: 100%;
+    }
 
     @media (max-width: 800px) {
       grid-template-columns: 1fr;
