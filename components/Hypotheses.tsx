@@ -130,10 +130,7 @@ export const useRanges = (data: [IData, IData]) => {
         }
 
         const avg = r.reduce((acc, { xi, ni }) => acc + xi * ni, 0) / n;
-        const avgSum = r.reduce(
-          (acc, { left, right, ni }) => acc + ni * ((left + right) / 2 - avg) ** 2,
-          0,
-        );
+        const avgSum = r.reduce((acc, { xi, ni }) => acc + ni * (xi - avg) ** 2, 0);
         const dispers = avgSum / (data.length - 1);
 
         return { ranges: r, avg, n, sum, xmin, xmax, dispers };
