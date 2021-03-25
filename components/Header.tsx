@@ -9,6 +9,7 @@ const Wrapper = styled.header`
   box-shadow: 0 0 15px 0 rgb(0 0 0 / 10%);
   height: 48px;
   padding: 0 1.5rem;
+  position: relative;
   overflow: auto;
   z-index: 2;
   & > nav {
@@ -46,7 +47,7 @@ const getCurrentIndex = (pathname: string) => {
   if (pathname === "/lab-3") return 2;
   if (pathname === "/lab-2") return 1;
   if (pathname === "/lab-1" || pathname === "/lab-1-alt") return 0;
-  return undefined;
+  return null;
 };
 
 const Header = () => {
@@ -57,17 +58,18 @@ const Header = () => {
   return (
     <Wrapper>
       <nav>
-        <Link href="/lab-1" passHref>
-          <IconButton
-            icon={<BsTriangleFill />}
-            aria-label="home"
-            variant="ghost"
-            as="a"
-            className="home"
-          />
-        </Link>
+        <IconButton
+          icon={<BsTriangleFill />}
+          aria-label="home"
+          variant="ghost"
+          as="a"
+          href="http://snelsi.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="home"
+        />
 
-        <Tabs isManual index={index} defaultIndex={-1}>
+        <Tabs isManual index={index}>
           <TabList>
             <Link href="/lab-1" passHref>
               <Tab as="a">Goodman</Tab>

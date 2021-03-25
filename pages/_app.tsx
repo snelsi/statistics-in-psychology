@@ -3,6 +3,7 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { RecoilRoot } from "recoil";
+import { Header } from "components";
 
 const theme = extendTheme({
   colors: {
@@ -20,6 +21,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <ChakraProvider theme={theme}>
       <RecoilRoot>
+        <Header />
         <Component {...pageProps} />
       </RecoilRoot>
       <Head>

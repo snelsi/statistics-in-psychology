@@ -1,7 +1,6 @@
 import * as React from "react";
 import styled from "@emotion/styled";
 import Head from "next/head";
-import { Header } from ".";
 
 interface WrapperProps {
   sidebarWidth?: string;
@@ -88,7 +87,6 @@ const Layout: React.FC<LayoutProps> = ({
     <Head>
       <title>{title}</title>
     </Head>
-    <Header />
     <Wrapper sidebarWidth={sidebarWidth}>
       <Sidebar>
         <div>{sidebar}</div>
