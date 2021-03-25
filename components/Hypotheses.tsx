@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+  StatGroup,
   Stat,
   StatLabel,
   StatNumber,
@@ -158,7 +159,7 @@ const Coordinate: React.FC<CoordinateProps> = ({ alpha, temp, k }) => {
 
       <StyledStatGroup mb="0.75rem">
         <Stat>
-          <StatLabel>Squared dispersion</StatLabel>
+          <StatLabel>Required coefficient</StatLabel>
           <StatNumber title={String(t_kr)}>{roundTo(t_kr, 3)}</StatNumber>
         </Stat>
       </StyledStatGroup>
@@ -202,13 +203,20 @@ const Hypotheses: React.FC<HypothesesProps> = ({ data }) => {
     <Card title="Hypotheses">
       <Divider my="1rem" />
 
-      <Stat mb="1rem">
-        <StatLabel>Student&apos;s coefficient</StatLabel>
-        <StatNumber title={String(temp)}>{roundTo(temp, 3)}</StatNumber>
-        <StatHelpText>{`${roundTo(sq2)} * (${roundTo(x_m)} - ${roundTo(y_m)}) / ${roundTo(
-          sq1,
-        )}`}</StatHelpText>
-      </Stat>
+      <StatGroup>
+        <Stat mb="1rem">
+          <StatLabel>Student&apos;s coefficient</StatLabel>
+          <StatNumber title={String(temp)}>{roundTo(temp, 3)}</StatNumber>
+          <StatHelpText>{`${roundTo(sq2)} * (${roundTo(x_m)} - ${roundTo(y_m)}) / ${roundTo(
+            sq1,
+          )}`}</StatHelpText>
+        </Stat>
+        <Stat>
+          <StatLabel>k</StatLabel>
+          <StatNumber>{k}</StatNumber>
+          <StatHelpText>{`${nx} + ${ny} - 2`}</StatHelpText>
+        </Stat>
+      </StatGroup>
 
       <Divider my="1rem" />
 
