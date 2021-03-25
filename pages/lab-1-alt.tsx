@@ -86,7 +86,7 @@ const Lab1 = () => {
     </Fade>
   );
 
-  const xData = sortedData.map((row) => row.data.map((d) => d.value));
+  const xData = sortedData.map((row) => row.data.map((d) => d.value || 0));
   const values = xData.flat();
 
   return (

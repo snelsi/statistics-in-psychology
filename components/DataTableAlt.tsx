@@ -42,7 +42,7 @@ const DataTableAlt: React.FC<DataTableProps> = ({ data }) => {
     for (let i = 0; i < (data?.[0]?.data?.length || 0); i++) {
       let n = 0;
       for (let row of data) {
-        n += row.data[i].value;
+        n += row.data?.[i]?.value || 0;
       }
       arr.push(n);
     }

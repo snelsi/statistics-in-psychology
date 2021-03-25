@@ -41,8 +41,12 @@ const propsLab1State = selector({
   get: ({ get }) => {
     const filteredData = get(filteredLab1State);
 
-    const props1: string[] = [...new Set(filteredData.map((d) => d.prop1?.trim()).filter(Boolean))];
-    const props2: string[] = [...new Set(filteredData.map((d) => d.prop2?.trim()).filter(Boolean))];
+    const props1: string[] = [
+      ...new Set(filteredData.map((d) => d.prop1?.toLowerCase().trim()).filter(Boolean)),
+    ];
+    const props2: string[] = [
+      ...new Set(filteredData.map((d) => d.prop2?.toLowerCase().trim()).filter(Boolean)),
+    ];
 
     return { props1, props2 };
   },
@@ -89,7 +93,7 @@ const sortedDataLab1State = selector({
     return props1
       .map((prop) => {
         const filteredData = pairs
-          .filter((p) => p.prop1 === prop)
+          .filter((p) => p.prop1?.toLowerCase().trim() === prop?.toLowerCase().trim())
           .sort((a, b) => a.prop2.localeCompare(b.prop2));
         return {
           prop1: prop,
